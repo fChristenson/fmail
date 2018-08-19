@@ -1,0 +1,43 @@
+{
+  "name": "fmail",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "server:watch": "npx nodemon ./server.js",
+    "css:watch": "npx postcss --watch ./src/public/css/main.css -o ./dist/main.css",
+    "webpack:watch": "npx webpack --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fChristenson/fmail.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fChristenson/fmail/issues"
+  },
+  "homepage": "https://github.com/fChristenson/fmail#readme",
+  "dependencies": {
+    "@material-ui/core": "^1.4.3",
+    "@material-ui/icons": "^2.0.2",
+    "express": "^4.16.3",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-router": "^4.3.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-react": "^6.24.1",
+    "html-webpack-plugin": "^3.2.0",
+    "nodemon": "^1.18.3",
+    "postcss": "^7.0.2",
+    "postcss-cli": "^6.0.0",
+    "postcss-import": "^12.0.0",
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0"
+  }
+}

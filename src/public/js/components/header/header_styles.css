@@ -1,0 +1,27 @@
+.header {
+  padding: var(--margin-m);
+  height: 60px;
+  background: var(--background-gray);
+  display: flex;
+  align-items: center;
+}
+
+.header__logo {
+  width: 200px;
+  font-size: var(--text-logo);
+  flex: 0 0 auto;
+  font-weight: bold;
+  padding: 0 30px;
+}
+
+.header__search-form {
+  flex: 1 1 auto;
+}
+
+.header__search-field {
+  padding: var(--margin-s);
+  height: 40px;
+  background: var(--background-white);
+  max-width: 300px;
+  margin-right: var(--margin-m);
+}

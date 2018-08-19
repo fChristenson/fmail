@@ -1,0 +1,20 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --background-gray: #f1f1f1;
+  --background-white: #fff;
+
+  --text-logo: 24px;
+
+  --margin-s: 4px;
+  --margin-m: 8px;
+  --margin-l: 12px;
+}
+
+html {
+  font-family: Roboto, sans-serif;
+}
