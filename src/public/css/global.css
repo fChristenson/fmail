@@ -7,12 +7,14 @@
 :root {
   --background-gray: #f1f1f1;
   --background-white: #fff;
+  --color-red: #c31a62;
 
   --text-logo: 24px;
 
   --margin-s: 4px;
   --margin-m: 8px;
   --margin-l: 12px;
+  --margin-logo: 30px;
 }
 
 html {
