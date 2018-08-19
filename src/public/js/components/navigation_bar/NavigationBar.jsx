@@ -7,7 +7,7 @@ class NavigationBar extends React.Component {
     super();
     this.onCompose = this.onCompose.bind(this);
   }
-  // TODO: move card, navigation bar, inbox, react router, test
+
   onCompose(event) {
     event.preventDefault();
     alert("onCompose");
