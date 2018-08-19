@@ -1,0 +1,23 @@
+.inbox__table-row--viewed {
+  background: var(--background-gray);
+}
+
+.inbox__table-cell,
+.inbox__table-cell--bold {
+  max-width: 200px;
+  white-space: nowrap;
+}
+
+.inbox__table-cell--bold {
+  font-weight: bold !important;
+}
+
+.inbox__star {
+  color: var(--color-yellow);
+}
+
+.inbox__link {
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

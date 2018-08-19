@@ -4,7 +4,9 @@ const paths = {
   important: "/important",
   sentMail: "/sent-mail",
   drafts: "/drafts",
-  spam: "/spam"
+  spam: "/spam",
+  emailTemplate: "/emails/:id",
+  email: emailId => `/emails/${emailId}`
 };
 
 module.exports = paths;

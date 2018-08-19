@@ -7,7 +7,7 @@ const NavigationListItem = ({ label, path, isSelected }) => {
     : "navigation-bar__li";
   return (
     <li className={className}>
-      <Link className="navigation-bar__link" to={path}>
+      <Link className="link" to={path}>
         {label}
       </Link>
     </li>

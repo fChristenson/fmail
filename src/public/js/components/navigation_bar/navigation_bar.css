@@ -1,5 +1,5 @@
 .navigation-bar {
-  max-width: 200px;
+  max-width: 160px;
   padding: 0 var(--margin-logo);
 }
 
@@ -26,9 +26,4 @@
 .navigation-bar__li--selected {
   color: var(--color-red);
   font-weight: bold;
-}
-
-.navigation-bar__link {
-  text-decoration: none;
-  color: inherit;
 }

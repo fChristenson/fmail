@@ -1,0 +1,9 @@
+.compose-email__text-field--message {
+  margin-top: calc(var(--margin-l) * 4) !important;
+}
+
+.compose-email__text-field {
+  margin: var(--margin-s) !important;
+  display: block !important;
+  max-width: 200px;
+}
