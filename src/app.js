@@ -1,5 +1,8 @@
 const express = require("express");
 const path = require("path");
+const { emailService } = require("./lib/services");
+const validateIncomingEmail = require("./lib/services/emailService/validateIncomingEmail");
+const catchExceptions = require("./lib/utils/catchExceptions");
 const app = express();
 
 app.use(express.json());
@@ -31,11 +34,15 @@ app.get("/emails", (req, res) => {
   res.json(emails);
 });
 
-app.post("/emails", (req, res) => {
-  console.log(req.body);
-  console.log("--------------------------");
-  res.json(req.body);
-});
+app.post(
+  "/emails",
+  validateIncomingEmail,
+  catchExceptions(async (req, res) => {
+    const { recipients, subject, message } = req.body;
+    const email = await emailService.createEmail(recipients, subject, message);
+    res.json(email);
+  })
+);
 
 app.all("*", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "dist", "index.html"));
