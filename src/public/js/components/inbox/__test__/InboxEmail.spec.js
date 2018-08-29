@@ -28,7 +28,7 @@ describe("InboxEmail", () => {
     const incomingEmail = {
       _id: "1",
       subject: "foo",
-      body: "bar",
+      message: "bar",
       isImportant: false,
       viewedAt: undefined,
       timestamp: Date.parse(dateTime)

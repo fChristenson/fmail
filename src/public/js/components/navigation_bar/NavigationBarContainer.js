@@ -34,8 +34,22 @@ const mapDispatchToProps = (dispatch, state) => {
         }
       }
     },
-    onError: errorMessage => {
-      const title = "Email failed";
+    onDraftSent: async pathname => {
+      if (Paths.drafts === pathname) {
+        try {
+          const response = await fetchEmails(pathname);
+          const json = await response.json();
+          const sort = json.sort(timestampSort);
+          const emails = sort.map(InboxEmail);
+          return dispatch(SetEmails(emails));
+        } catch (error) {
+          const title = "Error";
+          const text = error.message;
+          return dispatch(ShowAlert(title, text));
+        }
+      }
+    },
+    onError: (title, errorMessage) => {
       return dispatch(ShowAlert(title, errorMessage));
     }
   };

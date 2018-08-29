@@ -33,7 +33,8 @@ app.get(
 app.get(
   "/api/v1/draft-emails",
   catchExceptions(async (req, res) => {
-    res.json([]);
+    const draftEmails = await emailService.getDraftEmails();
+    res.json(draftEmails);
   })
 );
 
@@ -50,6 +51,19 @@ app.post(
   catchExceptions(async (req, res) => {
     const { recipients, subject, message } = req.body;
     const email = await emailService.createEmail(recipients, subject, message);
+    res.json(email);
+  })
+);
+
+app.post(
+  "/api/v1/draft-emails",
+  catchExceptions(async (req, res) => {
+    const { recipients, subject, message } = req.body;
+    const email = await emailService.createDraftEmail(
+      recipients,
+      subject,
+      message
+    );
     res.json(email);
   })
 );

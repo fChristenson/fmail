@@ -10,7 +10,7 @@ const formatTimestamp = timestamp => {
 const InboxEmail = incomingEmail => {
   const id = incomingEmail._id || "";
   const subject = incomingEmail.subject || "";
-  const body = incomingEmail.body || "";
+  const body = incomingEmail.message || "";
   const viewedAt = incomingEmail.viewedAt || "";
   const isImportant = incomingEmail.isImportant || false;
   let maybeTimestamp = incomingEmail.timestamp || "";
