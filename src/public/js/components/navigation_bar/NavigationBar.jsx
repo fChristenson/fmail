@@ -1,36 +1,17 @@
 const React = require("react");
 const Button = require("@material-ui/core/Button").default;
-const NavigationList = require("./NavigationList");
+const NavigationList = require("./navigation_list/NavigationListContainer");
+const Paths = require("../../config/paths");
 const ComposeEmail = require("./compose_email/ComposeEmail");
 const SendEmailRequest = require("./compose_email/SendEmailRequest");
-const ComposeEmailOutcomeAlert = require("./ComposeEmailOutcomeAlert");
 
 class NavigationBar extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      composeEmailOpen: false,
-      errorAlertOpen: false,
-      successAlertOpen: false,
-      errorMessage: "Something went wrong!"
-    };
+  constructor(props) {
+    super(props);
+    this.state = { composeEmailOpen: false };
     this.onCompose = this.onCompose.bind(this);
     this.onCancel = this.onCancel.bind(this);
     this.onSend = this.onSend.bind(this);
-    this.onErrorAlertClose = this.onErrorAlertClose.bind(this);
-    this.onSuccessAlertClose = this.onSuccessAlertClose.bind(this);
-  }
-
-  onSuccessAlertClose() {
-    this.setState({ successAlertOpen: false });
-  }
-
-  onErrorAlertClose() {
-    this.setState({ errorAlertOpen: false });
-  }
-
-  onErrorAlertClose() {
-    this.setState({ errorAlertOpen: false });
   }
 
   onCancel() {
@@ -44,18 +25,17 @@ class NavigationBar extends React.Component {
     const message = event.target.message.value;
     const request = SendEmailRequest(recipients, subject, message);
     try {
-      const response = await fetch("/emails", request);
+      const response = await fetch(Paths.api.sendEmail, request);
+      const json = await response.json();
       if (!response.ok) {
-        const json = await response.json();
         throw new Error(json.error);
+      } else {
+        this.setState({ composeEmailOpen: false });
+        this.props.onEmailSent(this.props.pathname);
       }
-      this.setState({ composeEmailOpen: false, successAlertOpen: true });
     } catch (error) {
-      this.setState({
-        composeEmailOpen: false,
-        errorAlertOpen: true,
-        errorMessage: error.message
-      });
+      this.setState({ composeEmailOpen: false });
+      this.props.onError(error.message);
     }
   }
 
@@ -79,13 +59,6 @@ class NavigationBar extends React.Component {
           open={this.state.composeEmailOpen}
           onCancel={this.onCancel}
           onSend={this.onSend}
-        />
-        <ComposeEmailOutcomeAlert
-          errorAlertOpen={this.state.errorAlertOpen}
-          errorMessage={this.state.errorMessage}
-          onErrorAlertClose={this.onErrorAlertClose}
-          successAlertOpen={this.state.successAlertOpen}
-          onSuccessAlertClose={this.onSuccessAlertClose}
         />
       </aside>
     );

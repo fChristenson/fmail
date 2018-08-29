@@ -1,4 +1,4 @@
-const timestampSort = require("../timestampSort");
+const timestampSort = require("../utils/timestampSort");
 
 const Email = timestamp => {
   return { timestamp };

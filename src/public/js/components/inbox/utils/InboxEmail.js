@@ -8,7 +8,7 @@ const formatTimestamp = timestamp => {
 };
 
 const InboxEmail = incomingEmail => {
-  const id = incomingEmail.id || "";
+  const id = incomingEmail._id || "";
   const subject = incomingEmail.subject || "";
   const body = incomingEmail.body || "";
   const viewedAt = incomingEmail.viewedAt || "";

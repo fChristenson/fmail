@@ -1,0 +1,5 @@
+const SET_LOCATION = "NAVIGATION_LIST/SET_LOCATION";
+
+module.exports = {
+  SET_LOCATION
+};

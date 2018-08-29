@@ -3,7 +3,7 @@ const TableRow = require("@material-ui/core/TableRow").default;
 const TableCell = require("@material-ui/core/TableCell").default;
 const InboxRowIcons = require("./InboxRowIcons");
 const Link = require("react-router-dom/Link").default;
-const Paths = require("../../config/paths");
+const Paths = require("../../../config/paths");
 
 const InboxRow = ({ email }) => {
   const className = email.viewedAt

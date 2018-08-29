@@ -1,29 +1,22 @@
 const React = require("react");
 const Table = require("@material-ui/core/Table").default;
 const TableBody = require("@material-ui/core/TableBody").default;
-const InboxRow = require("./InboxRow");
-const InboxEmail = require("./InboxEmail");
-const timestampSort = require("./timestampSort");
+const InboxRow = require("./components/InboxRow");
 
 class Inbox extends React.Component {
-  constructor() {
-    super();
-    this.state = { emails: [] };
+  constructor(props) {
+    super(props);
   }
 
-  async componentWillMount() {
-    const response = await fetch("/emails");
-    const json = await response.json();
-    const sortedEmails = json.sort(timestampSort);
-    const emails = sortedEmails.map(incomingEmail => InboxEmail(incomingEmail));
-    this.setState({ emails });
+  componentDidMount() {
+    this.props.fetchEmails(window.location.pathname);
   }
 
   render() {
     return (
       <Table>
         <TableBody>
-          {this.state.emails.map(email => (
+          {this.props.emails.map(email => (
             <InboxRow key={email.id} email={email} />
           ))}
         </TableBody>

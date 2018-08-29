@@ -19,9 +19,16 @@ describe("EmailModel", () => {
   it("correctly serialises the model", async () => {
     const subject = "foo";
     const message = "bar";
+    const type = "outgoing";
     const timestamp = new Date("2018-08-23T16:42:41.897Z");
     const recipients = [];
-    const email = new EmailModel({ recipients, subject, message, timestamp });
+    const email = new EmailModel({
+      recipients,
+      subject,
+      message,
+      type,
+      timestamp
+    });
     await email.save();
     const emailInDatabase = await EmailModel.findById(email.id);
     const expected = {
@@ -30,6 +37,7 @@ describe("EmailModel", () => {
       _id: email.id,
       subject,
       message,
+      type,
       timestamp,
       __v: 0
     };

@@ -1,4 +1,4 @@
-const InboxEmail = require("../InboxEmail");
+const InboxEmail = require("../utils/InboxEmail");
 
 describe("InboxEmail", () => {
   it("has a module", () => {
@@ -26,7 +26,7 @@ describe("InboxEmail", () => {
     const dateTime = "2018-08-19T09:29:21.318Z";
     const formattedDateTime = "2018-08-19 09:29";
     const incomingEmail = {
-      id: "1",
+      _id: "1",
       subject: "foo",
       body: "bar",
       isImportant: false,

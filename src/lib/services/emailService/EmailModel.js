@@ -6,6 +6,11 @@ const EmailSchema = new Schema({
   subject: { type: String, required: true },
   isImportant: { type: Boolean, default: false },
   message: { type: String, required: true },
+  type: {
+    type: String,
+    enum: ["received", "outgoing", "sent"],
+    required: true
+  },
   timestamp: { type: Date, default: Date.now }
 });
 

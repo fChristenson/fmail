@@ -1,0 +1,7 @@
+const SHOW_ALERT = "ALERT/SHOW_ALERT";
+const CLOSE_ALERT = "ALERT/CLOSE_ALERT";
+
+module.exports = {
+  SHOW_ALERT,
+  CLOSE_ALERT
+};
