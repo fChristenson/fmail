@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const { emailService } = require("./lib/services");
 const validateIncomingEmail = require("./lib/services/emailService/validateIncomingEmail");
+const validateIncomingImportantRequest = require("./lib/services/emailService/validateIncomingImportantRequest");
 const catchExceptions = require("./lib/utils/catchExceptions");
 const app = express();
 
@@ -18,7 +19,8 @@ app.get(
 app.get(
   "/api/v1/important-emails",
   catchExceptions(async (req, res) => {
-    res.json([]);
+    const email = await emailService.getImportantEmails();
+    res.json(email);
   })
 );
 
@@ -64,6 +66,17 @@ app.post(
       subject,
       message
     );
+    res.json(email);
+  })
+);
+
+app.post(
+  "/api/v1/emails/:emailId/important",
+  validateIncomingImportantRequest,
+  catchExceptions(async (req, res) => {
+    const { emailId } = req.params;
+    const { isImportant } = req.body;
+    const email = await emailService.setEmailAsImportant(emailId, isImportant);
     res.json(email);
   })
 );

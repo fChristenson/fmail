@@ -1,12 +1,12 @@
 const { connect } = require("react-redux");
 const fetchEmails = require("./utils/fetchEmails")(window.fetch);
-const { ShowAlert } = require("../alert/alert_actions");
-const { SetEmails } = require("./inbox_actions");
+const { ShowAlert } = require("../alert/alertActions");
+const { SetEmails } = require("./inboxActions");
 const timestampSort = require("./utils/timestampSort");
 const InboxEmail = require("./utils/InboxEmail");
 const {
   SetLocation
-} = require("../navigation_bar/navigation_list/navigation_list_actions");
+} = require("../navigationBar/components/navigationList/navigationListActions");
 const Inbox = require("./Inbox");
 
 const mapStateToProps = state => {

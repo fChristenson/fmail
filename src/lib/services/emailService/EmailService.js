@@ -4,6 +4,8 @@ class EmailService {
     this.createEmail = this.createEmail.bind(this);
     this.getSentEmails = this.getSentEmails.bind(this);
     this.getDraftEmails = this.getDraftEmails.bind(this);
+    this.getImportantEmails = this.getImportantEmails.bind(this);
+    this.setEmailAsImportant = this.setEmailAsImportant.bind(this);
     this.createDraftEmail = this.createDraftEmail.bind(this);
   }
 
@@ -16,6 +18,16 @@ class EmailService {
     const type = "draft";
     const subject = maybeSubject || "<no subject>";
     return new this.EmailModel({ recipients, subject, message, type }).save();
+  }
+
+  getImportantEmails() {
+    return this.EmailModel.find({ isImportant: true });
+  }
+
+  async setEmailAsImportant(emailId, isImportant) {
+    const email = await this.EmailModel.findById(emailId);
+    email.isImportant = isImportant;
+    return email.save();
   }
 
   getDraftEmails() {

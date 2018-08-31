@@ -1,6 +1,6 @@
 const React = require("react");
 const NavigationListItem = require("./NavigationListItem");
-const Paths = require("../../../config/paths");
+const Paths = require("../../../../config/paths");
 const isSelected = require("./isSelected");
 
 const NavigationList = ({ pathname }) => {

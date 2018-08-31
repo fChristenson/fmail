@@ -1,6 +1,6 @@
 const React = require("react");
 const Header = require("../header/Header");
-const NavigationBar = require("../navigation_bar/NavigationBarContainer");
+const NavigationBar = require("../navigationBar/NavigationBarContainer");
 const Router = require("react-router-dom/BrowserRouter").default;
 const Route = require("react-router-dom/Route").default;
 const Inbox = require("../inbox/InboxContainer");

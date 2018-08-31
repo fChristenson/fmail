@@ -1,4 +1,4 @@
-const { SHOW_ALERT, CLOSE_ALERT } = require("./alert_events");
+const { SHOW_ALERT, CLOSE_ALERT } = require("./alertEvents");
 
 const initState = {
   open: false,

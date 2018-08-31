@@ -1,4 +1,4 @@
-const { SET_EMAILS } = require("./inbox_events");
+const { SET_EMAILS } = require("./inboxEvents");
 
 function SetEmails(emails) {
   return {

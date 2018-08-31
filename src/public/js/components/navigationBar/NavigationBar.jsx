@@ -1,9 +1,9 @@
 const React = require("react");
 const Button = require("@material-ui/core/Button").default;
-const NavigationList = require("./navigation_list/NavigationListContainer");
+const NavigationList = require("./components/navigationList/NavigationListContainer");
 const Paths = require("../../config/paths");
-const ComposeEmail = require("./compose_email/ComposeEmail");
-const SendEmailRequest = require("./compose_email/SendEmailRequest");
+const ComposeEmail = require("./components/composeEmail/ComposeEmail");
+const SendEmailRequest = require("./components/composeEmail/SendEmailRequest");
 const emailWasStarted = require("./utils/emailWasStarted");
 
 class NavigationBar extends React.Component {

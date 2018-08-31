@@ -1,24 +1,34 @@
 const React = require("react");
+const Paths = require("../../../config/paths");
+const SetEmailToImportantRequest = require("./SetEmailToImportantRequest");
 const IconButton = require("@material-ui/core/IconButton").default;
 const StarIcon = require("@material-ui/icons/Star").default;
 const StarBorderIcon = require("@material-ui/icons/StarBorder").default;
 
 class InboxRowIcons extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.onClick = this.onClick.bind(this);
+    this.state = { isImportant: props.isImportant };
   }
 
-  onClick() {
-    //TODO: set email on server to important
-    alert(`Set ${this.props.emailId} to important`);
+  componentWillReceiveProps(nextProps) {
+    this.setState({ isImportant: nextProps.isImportant });
+  }
+
+  async onClick() {
+    const isImportant = !this.state.isImportant;
+    this.setState({ isImportant });
+    const request = SetEmailToImportantRequest(isImportant);
+    const path = Paths.api.setEmailToImportant(this.props.emailId);
+    await fetch(path, request);
   }
 
   render() {
     return (
       <div>
         <IconButton onClick={this.onClick}>
-          {this.props.isImportant
+          {this.state.isImportant
             ? <StarIcon className="inbox__star" />
             : <StarBorderIcon />}
         </IconButton>

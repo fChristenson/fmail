@@ -13,7 +13,8 @@ const paths = {
     sentMailEmails: "/api/v1/sent-emails",
     draftsEmails: "/api/v1/draft-emails",
     spamEmails: "/api/v1/spam-emails",
-    sendEmail: "/api/v1/emails"
+    sendEmail: "/api/v1/emails",
+    setEmailToImportant: emailId => `/api/v1/emails/${emailId}/important`
   }
 };
 

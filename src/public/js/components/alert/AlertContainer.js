@@ -1,5 +1,5 @@
 const { connect } = require("react-redux");
-const { CloseAlert } = require("./alert_actions");
+const { CloseAlert } = require("./alertActions");
 const Alert = require("./Alert");
 
 const mapStateToProps = state => {

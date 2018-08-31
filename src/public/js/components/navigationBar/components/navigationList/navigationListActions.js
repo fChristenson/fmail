@@ -1,4 +1,4 @@
-const { SET_LOCATION } = require("./navigation_list_events");
+const { SET_LOCATION } = require("./navigationListEvents");
 
 function SetLocation(pathname) {
   return {

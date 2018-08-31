@@ -1,6 +1,6 @@
 const { connect } = require("react-redux");
-const { ShowAlert } = require("../alert/alert_actions");
-const { SetEmails } = require("../inbox/inbox_actions");
+const { ShowAlert } = require("../alert/alertActions");
+const { SetEmails } = require("../inbox/inboxActions");
 const fetchEmails = require("../inbox/utils/fetchEmails")(window.fetch);
 const timestampSort = require("../inbox/utils/timestampSort");
 const InboxEmail = require("../inbox/utils/InboxEmail");
