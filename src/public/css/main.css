@@ -2,5 +2,6 @@
 @import "../js/components/App/app.css";
 @import "../js/components/header/header.css";
 @import "../js/components/inbox/inbox.css";
+@import "../js/components/email/email.css";
 @import "../js/components/navigationBar/navigationBar.css";
-@import "../js/components/navigationBar/composeEmail/composeEmail.css";
+@import "../js/components/navigationBar/components/composeEmail/composeEmail.css";

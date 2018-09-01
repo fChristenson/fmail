@@ -1,0 +1,34 @@
+.email {
+  width: 100%;
+  padding: var(--margin-l) var(--margin-l) 0 0;
+}
+
+.email__subject {
+  font-weight: var(--font-weight-l);
+  font-size: var(--font-size-m);
+  padding-bottom: var(--margin-m);
+  border-bottom: 1px solid var(--background-black);
+}
+
+.email__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.email__from,
+.email__timestamp,
+.email__to {
+  font-size: var(--font-size-s);
+  margin: var(--margin-m) 0;
+}
+
+.email__from-label {
+  font-weight: var(--font-weight-m);
+  margin-right: var(--margin-m);
+}
+
+.email__content {
+  margin-top: calc(var(--margin-l) * 2);
+  font-weight: var(--font-weight-l);
+  font-size: var(--font-size-m);
+}

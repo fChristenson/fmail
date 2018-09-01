@@ -5,12 +5,18 @@
 }
 
 :root {
+  --background-black: #000;
   --background-gray: #f1f1f1;
   --background-white: #fff;
   --color-red: #c31a62;
   --color-yellow: #FEDD82;
 
-  --text-logo: 24px;
+  --font-size-s: 0.8rem;
+  --font-size-m: 1rem;
+  --font-size-l: 2rem;
+
+  --font-weight-m: 200;
+  --font-weight-l: 400;
 
   --margin-s: 4px;
   --margin-m: 8px;

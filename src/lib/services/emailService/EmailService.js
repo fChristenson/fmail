@@ -2,6 +2,7 @@ class EmailService {
   constructor(EmailModel) {
     this.EmailModel = EmailModel;
     this.createEmail = this.createEmail.bind(this);
+    this.getEmail = this.getEmail.bind(this);
     this.getSentEmails = this.getSentEmails.bind(this);
     this.getDraftEmails = this.getDraftEmails.bind(this);
     this.getImportantEmails = this.getImportantEmails.bind(this);
@@ -18,6 +19,10 @@ class EmailService {
     const type = "draft";
     const subject = maybeSubject || "<no subject>";
     return new this.EmailModel({ recipients, subject, message, type }).save();
+  }
+
+  getEmail(emailId) {
+    return this.EmailModel.findById(emailId);
   }
 
   getImportantEmails() {

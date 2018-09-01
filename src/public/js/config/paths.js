@@ -5,7 +5,7 @@ const paths = {
   sentMail: "/sent-mail",
   drafts: "/drafts",
   spam: "/spam",
-  emailTemplate: "/emails/:id",
+  emailTemplate: "/emails/:emailId",
   email: emailId => `/emails/${emailId}`,
   api: {
     inboxEmails: "/api/v1/inbox-emails",
@@ -14,6 +14,7 @@ const paths = {
     draftsEmails: "/api/v1/draft-emails",
     spamEmails: "/api/v1/spam-emails",
     sendEmail: "/api/v1/emails",
+    email: emailId => `/api/v1/emails/${emailId}`,
     setEmailToImportant: emailId => `/api/v1/emails/${emailId}/important`
   }
 };

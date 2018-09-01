@@ -112,6 +112,19 @@ describe("EmailService", () => {
     });
   });
 
+  describe("getEmail", () => {
+    it("gets an email", () => {
+      const mockFind = jest.fn();
+      const emailId = "foo";
+      const MockEmailModel = {
+        findById: mockFind
+      };
+      const emailService = new EmailService(MockEmailModel);
+      emailService.getEmail(emailId);
+      expect(mockFind).toBeCalledWith(emailId);
+    });
+  });
+
   describe("getImportantEmails", () => {
     it("gets important emails", () => {
       const mockFind = jest.fn();

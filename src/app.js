@@ -17,6 +17,15 @@ app.get(
 );
 
 app.get(
+  "/api/v1/emails/:emailId",
+  catchExceptions(async (req, res) => {
+    const { emailId } = req.params;
+    const email = await emailService.getEmail(emailId);
+    res.json(email);
+  })
+);
+
+app.get(
   "/api/v1/important-emails",
   catchExceptions(async (req, res) => {
     const email = await emailService.getImportantEmails();

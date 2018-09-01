@@ -1,5 +1,5 @@
 const React = require("react");
-const Paths = require("../../../config/paths");
+const Paths = require("../../../../config/paths");
 const SetEmailToImportantRequest = require("./SetEmailToImportantRequest");
 const IconButton = require("@material-ui/core/IconButton").default;
 const StarIcon = require("@material-ui/icons/Star").default;
@@ -21,7 +21,11 @@ class InboxRowIcons extends React.Component {
     this.setState({ isImportant });
     const request = SetEmailToImportantRequest(isImportant);
     const path = Paths.api.setEmailToImportant(this.props.emailId);
-    await fetch(path, request);
+    try {
+      await fetch(path, request);
+    } catch (error) {
+      this.props.onError(error);
+    }
   }
 
   render() {

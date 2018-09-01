@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const EmailSchema = new Schema({
   recipients: { type: Array },
+  from: { type: String, default: "me@fmail.com" },
   subject: { type: String, required: true },
   isImportant: { type: Boolean, default: false },
   message: { type: String },
