@@ -9,7 +9,8 @@
     "css:watch": "npx postcss --watch ./src/public/css/main.css -o ./dist/main.css",
     "webpack:watch": "npx webpack --watch",
     "test": "jest",
-    "test:watch": "jest --watchAll"
+    "test:watch": "jest --watchAll",
+    "test:generate-inbox-emails": "node ./generateInboxEmails.js"
   },
   "repository": {
     "type": "git",

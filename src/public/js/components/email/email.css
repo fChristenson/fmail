@@ -1,6 +1,6 @@
 .email {
   width: 100%;
-  padding: var(--margin-l) var(--margin-l) 0 0;
+  padding: var(--margin-l) var(--margin-l) var(--margin-l) 0;
 }
 
 .email__subject {

@@ -8,6 +8,7 @@ class EmailService {
     this.getImportantEmails = this.getImportantEmails.bind(this);
     this.setEmailAsImportant = this.setEmailAsImportant.bind(this);
     this.createDraftEmail = this.createDraftEmail.bind(this);
+    this.getInboxEmails = this.getInboxEmails.bind(this);
   }
 
   createEmail(recipients, subject, message) {
@@ -23,6 +24,10 @@ class EmailService {
 
   getEmail(emailId) {
     return this.EmailModel.findById(emailId);
+  }
+
+  getInboxEmails() {
+    return this.EmailModel.find({ type: "received" });
   }
 
   getImportantEmails() {

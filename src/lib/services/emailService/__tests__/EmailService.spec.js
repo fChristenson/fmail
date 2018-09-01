@@ -138,6 +138,19 @@ describe("EmailService", () => {
     });
   });
 
+  describe("getInboxEmails", () => {
+    it("gets inbox emails", () => {
+      const mockFind = jest.fn();
+      const MockEmailModel = {
+        find: mockFind
+      };
+      const query = { type: "received" };
+      const emailService = new EmailService(MockEmailModel);
+      emailService.getInboxEmails();
+      expect(mockFind).toBeCalledWith(query);
+    });
+  });
+
   describe("getDraftEmails", () => {
     it("gets draft emails", () => {
       const mockFind = jest.fn();

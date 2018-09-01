@@ -12,7 +12,8 @@ app.use(express.static(path.join(__dirname, "..", "dist")));
 app.get(
   "/api/v1/inbox-emails",
   catchExceptions(async (req, res) => {
-    res.json([]);
+    const email = await emailService.getInboxEmails();
+    res.json(email);
   })
 );
 
