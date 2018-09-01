@@ -22,6 +22,8 @@ app.get(
   catchExceptions(async (req, res) => {
     const { emailId } = req.params;
     const email = await emailService.getEmail(emailId);
+    const now = Date.now();
+    await emailService.setEmailToViewed(emailId, now);
     res.json(email);
   })
 );
@@ -39,6 +41,14 @@ app.get(
   catchExceptions(async (req, res) => {
     const email = await emailService.getSentEmails();
     res.json(email);
+  })
+);
+
+app.get(
+  "/api/v1/email-overview",
+  catchExceptions(async (req, res) => {
+    const emailOverview = await emailService.getEmailOverview();
+    res.json(emailOverview);
   })
 );
 

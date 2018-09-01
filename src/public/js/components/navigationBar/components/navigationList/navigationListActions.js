@@ -1,4 +1,4 @@
-const { SET_LOCATION } = require("./navigationListEvents");
+const { SET_LOCATION, SET_EMAIL_OVERVIEW } = require("./navigationListEvents");
 
 function SetLocation(pathname) {
   return {
@@ -8,3 +8,12 @@ function SetLocation(pathname) {
 }
 
 module.exports.SetLocation = SetLocation;
+
+function SetEmailOverview(overview) {
+  return {
+    type: SET_EMAIL_OVERVIEW,
+    value: overview
+  };
+}
+
+module.exports.SetEmailOverview = SetEmailOverview;

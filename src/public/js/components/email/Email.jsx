@@ -9,11 +9,15 @@ class Email extends React.Component {
   }
 
   async componentDidMount() {
-    const emailId = this.props.emailId;
-    const response = await fetch(Paths.api.email(emailId));
-    const email = await response.json();
-    const view = EmailView(email);
-    this.setState({ email: view });
+    try {
+      const emailId = this.props.emailId;
+      const response = await fetch(Paths.api.email(emailId));
+      const email = await response.json();
+      const view = EmailView(email);
+      this.setState({ email: view });
+    } catch (error) {
+      this.props.onError(error);
+    }
   }
 
   render() {

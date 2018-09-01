@@ -27,3 +27,7 @@
   color: var(--color-red);
   font-weight: bold;
 }
+
+.navigation-bar__li--number {
+  font-weight: bold;
+}

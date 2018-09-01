@@ -3,11 +3,12 @@ const NavigationList = require("./NavigationList");
 
 const mapStateToProps = state => {
   return {
-    pathname: state.navigationList.pathname
+    pathname: state.navigationList.pathname,
+    emailOverview: state.navigationList.emailOverview
   };
 };
 
-const mapDispatchToProps = () => {
+const mapDispatchToProps = dispatch => {
   return {};
 };
 

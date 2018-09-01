@@ -10,6 +10,36 @@ class EmailService {
     this.createDraftEmail = this.createDraftEmail.bind(this);
     this.getInboxEmails = this.getInboxEmails.bind(this);
     this.getSpamEmails = this.getSpamEmails.bind(this);
+    this.getEmailOverview = this.getEmailOverview.bind(this);
+    this.setEmailToViewed = this.setEmailToViewed.bind(this);
+  }
+
+  async setEmailToViewed(emailId, viewedAt) {
+    const email = await this.EmailModel.findById(emailId);
+    email.viewedAt = viewedAt;
+    return email.save();
+  }
+
+  async getEmailOverview() {
+    const unreadInboxEmails = await this.EmailModel.count({
+      type: "received",
+      isSpam: false,
+      viewedAt: undefined
+    });
+
+    const draftEmails = await this.EmailModel.count({ type: "draft" });
+
+    const unreadSpamEmails = await this.EmailModel.count({
+      type: "received",
+      isSpam: true,
+      viewedAt: undefined
+    });
+
+    return {
+      unreadInboxEmails,
+      draftEmails,
+      unreadSpamEmails
+    };
   }
 
   createEmail(recipients, subject, message) {
@@ -28,7 +58,7 @@ class EmailService {
   }
 
   getInboxEmails() {
-    return this.EmailModel.find({ type: "received" });
+    return this.EmailModel.find({ type: "received", isSpam: false });
   }
 
   getSpamEmails() {

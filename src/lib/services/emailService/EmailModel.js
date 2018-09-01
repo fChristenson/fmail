@@ -13,6 +13,7 @@ const EmailSchema = new Schema({
     enum: ["received", "outgoing", "draft", "sent"],
     required: true
   },
+  viewedAt: { type: Date },
   timestamp: { type: Date, default: Date.now }
 });
 
