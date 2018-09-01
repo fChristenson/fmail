@@ -10,7 +10,8 @@
     "webpack:watch": "npx webpack --watch",
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "test:generate-inbox-emails": "node ./generateInboxEmails.js"
+    "test:generate-inbox-emails": "node ./generateInboxEmails.js",
+    "test:generate-spam-emails": "node ./generateSpamEmails.js"
   },
   "repository": {
     "type": "git",

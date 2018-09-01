@@ -151,6 +151,19 @@ describe("EmailService", () => {
     });
   });
 
+  describe("getSpamEmails", () => {
+    it("gets spam emails", () => {
+      const mockFind = jest.fn();
+      const MockEmailModel = {
+        find: mockFind
+      };
+      const query = { isSpam: true };
+      const emailService = new EmailService(MockEmailModel);
+      emailService.getSpamEmails();
+      expect(mockFind).toBeCalledWith(query);
+    });
+  });
+
   describe("getDraftEmails", () => {
     it("gets draft emails", () => {
       const mockFind = jest.fn();

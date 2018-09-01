@@ -36,6 +36,7 @@ describe("EmailModel", () => {
       recipients,
       from,
       isImportant: false,
+      isSpam: false,
       _id: email.id,
       subject,
       message,

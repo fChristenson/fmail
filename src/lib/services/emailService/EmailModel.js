@@ -6,6 +6,7 @@ const EmailSchema = new Schema({
   from: { type: String, default: "me@fmail.com" },
   subject: { type: String, required: true },
   isImportant: { type: Boolean, default: false },
+  isSpam: { type: Boolean, default: false },
   message: { type: String },
   type: {
     type: String,

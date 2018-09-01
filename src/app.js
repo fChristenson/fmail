@@ -53,7 +53,8 @@ app.get(
 app.get(
   "/api/v1/spam-emails",
   catchExceptions(async (req, res) => {
-    res.json([]);
+    const spam = await emailService.getSpamEmails();
+    res.json(spam);
   })
 );
 
