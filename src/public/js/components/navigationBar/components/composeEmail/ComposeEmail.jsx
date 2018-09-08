@@ -9,8 +9,6 @@ const TextField = require("@material-ui/core/TextField").default;
 class ComposeEmail extends React.Component {
   constructor(props) {
     super(props);
-
-    this.formRef = React.createRef();
   }
 
   render() {
@@ -19,22 +17,38 @@ class ComposeEmail extends React.Component {
         fullWidth
         scroll="paper"
         open={this.props.open}
-        onClose={() => this.props.onCancel(this.formRef.current)}
+        onClose={() =>
+          this.props.onCancel(
+            this.props.originalForm,
+            this.props.form,
+            this.props.pathname
+          )}
       >
         <DialogTitle>Compose email</DialogTitle>
-        <form onSubmit={this.props.onSend} ref={this.formRef}>
+        <form
+          onSubmit={event =>
+            this.props.onSend(
+              event,
+              this.props.pathname,
+              this.props.form.emailId
+            )}
+        >
           <DialogContent>
             <TextField
               required
               name="recipients"
               className="compose-email__text-field"
               label="Recipients"
+              onChange={this.props.onRecipientsChange}
+              value={this.props.form.recipients}
             />
             <TextField
               required
               name="subject"
               className="compose-email__text-field"
               label="Subject"
+              onChange={this.props.onSubjectChange}
+              value={this.props.form.subject}
             />
             <TextField
               required
@@ -44,12 +58,19 @@ class ComposeEmail extends React.Component {
               fullWidth
               multiline
               label="Message"
+              onChange={this.props.onMessageChange}
+              value={this.props.form.message}
             />
           </DialogContent>
           <DialogActions>
             <Button
               variant="contained"
-              onClick={() => this.props.onCancel(this.formRef.current)}
+              onClick={() =>
+                this.props.onCancel(
+                  this.props.originalForm,
+                  this.props.form,
+                  this.props.pathname
+                )}
               color="secondary"
             >
               Cancel

@@ -1,56 +1,17 @@
 const { connect } = require("react-redux");
-const { ShowAlert } = require("../alert/alertActions");
-const { SetEmails } = require("../inbox/inboxActions");
-const fetchEmails = require("../inbox/utils/fetchEmails")(window.fetch);
-const timestampSort = require("../inbox/utils/timestampSort");
-const InboxEmail = require("../inbox/utils/InboxEmail");
-const Paths = require("../../config/paths");
+const {
+  ShowComposeEmail
+} = require("../navigationBar/components/composeEmail/composeEmailActions");
 const NavigationBar = require("./NavigationBar");
 
 const mapStateToProps = state => {
-  return {
-    pathname: state.navigationList.pathname
-  };
+  return {};
 };
 
-const mapDispatchToProps = (dispatch, state) => {
+const mapDispatchToProps = dispatch => {
   return {
-    onEmailSent: async pathname => {
-      const title = "Email sent";
-      const text = "Email was sent successfully";
-      dispatch(ShowAlert(title, text));
-
-      if (Paths.sentMail === pathname) {
-        try {
-          const response = await fetchEmails(pathname);
-          const json = await response.json();
-          const sort = json.sort(timestampSort);
-          const emails = sort.map(InboxEmail);
-          return dispatch(SetEmails(emails));
-        } catch (error) {
-          const title = "Error";
-          const text = error.message;
-          return dispatch(ShowAlert(title, text));
-        }
-      }
-    },
-    onDraftSent: async pathname => {
-      if (Paths.drafts === pathname) {
-        try {
-          const response = await fetchEmails(pathname);
-          const json = await response.json();
-          const sort = json.sort(timestampSort);
-          const emails = sort.map(InboxEmail);
-          return dispatch(SetEmails(emails));
-        } catch (error) {
-          const title = "Error";
-          const text = error.message;
-          return dispatch(ShowAlert(title, text));
-        }
-      }
-    },
-    onError: (title, errorMessage) => {
-      return dispatch(ShowAlert(title, errorMessage));
+    onCompose() {
+      dispatch(ShowComposeEmail(true));
     }
   };
 };

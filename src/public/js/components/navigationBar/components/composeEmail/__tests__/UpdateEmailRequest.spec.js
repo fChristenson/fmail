@@ -1,10 +1,10 @@
-const SendEmailRequest = require("../utils/SendEmailRequest");
+const UpdateEmailRequest = require("../utils/UpdateEmailRequest");
 
-describe("SendEmailRequest", () => {
+describe("UpdateEmailRequest", () => {
   it("has a module", () => {
-    expect(SendEmailRequest).toBeDefined();
+    expect(UpdateEmailRequest).toBeDefined();
     const expected = "function";
-    const actual = typeof SendEmailRequest;
+    const actual = typeof UpdateEmailRequest;
     expect(expected).toEqual(actual);
   });
 
@@ -18,13 +18,13 @@ describe("SendEmailRequest", () => {
       message
     };
     const expected = {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(data)
     };
-    const actual = SendEmailRequest(recipients, subject, message);
+    const actual = UpdateEmailRequest(recipients, subject, message);
     expect(expected).toEqual(actual);
   });
 
@@ -38,13 +38,13 @@ describe("SendEmailRequest", () => {
       message
     };
     const expected = {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(data)
     };
-    const actual = SendEmailRequest(recipients, subject, message);
+    const actual = UpdateEmailRequest(recipients, subject, message);
     expect(expected).toEqual(actual);
   });
 });

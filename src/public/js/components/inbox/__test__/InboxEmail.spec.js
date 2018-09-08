@@ -16,6 +16,8 @@ describe("InboxEmail", () => {
       body: "",
       timestamp: "",
       viewedAt: "",
+      recipients: "",
+      type: "",
       isImportant: false
     };
     const actual = InboxEmail(incomingEmail);
@@ -30,7 +32,9 @@ describe("InboxEmail", () => {
       subject: "foo",
       message: "bar",
       isImportant: false,
+      recipients: ["foo@bar.se", "bar@foo.se"],
       viewedAt: undefined,
+      type: "draft",
       timestamp: Date.parse(dateTime)
     };
     const expected = {
@@ -38,7 +42,9 @@ describe("InboxEmail", () => {
       subject: "foo",
       body: "bar",
       isImportant: false,
+      recipients: "foo@bar.se, bar@foo.se",
       viewedAt: "",
+      type: "draft",
       timestamp: formattedDateTime
     };
     const actual = InboxEmail(incomingEmail);

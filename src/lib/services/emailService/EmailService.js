@@ -8,10 +8,12 @@ class EmailService {
     this.getImportantEmails = this.getImportantEmails.bind(this);
     this.setEmailAsImportant = this.setEmailAsImportant.bind(this);
     this.createDraftEmail = this.createDraftEmail.bind(this);
+    this.updateDraftEmail = this.updateDraftEmail.bind(this);
     this.getInboxEmails = this.getInboxEmails.bind(this);
     this.getSpamEmails = this.getSpamEmails.bind(this);
     this.getEmailOverview = this.getEmailOverview.bind(this);
     this.setEmailToViewed = this.setEmailToViewed.bind(this);
+    this.removeEmail = this.removeEmail.bind(this);
   }
 
   async setEmailToViewed(emailId, viewedAt) {
@@ -47,14 +49,34 @@ class EmailService {
     return new this.EmailModel({ recipients, subject, message, type }).save();
   }
 
-  createDraftEmail(recipients, maybeSubject, message) {
+  createDraftEmail(recipients, maybeSubject, message, viewedAt) {
     const type = "draft";
     const subject = maybeSubject || "<no subject>";
-    return new this.EmailModel({ recipients, subject, message, type }).save();
+    return new this.EmailModel({
+      recipients,
+      subject,
+      message,
+      type,
+      viewedAt
+    }).save();
+  }
+
+  async updateDraftEmail(emailId, recipients, subject, message) {
+    const email = await this.EmailModel.findById(emailId);
+    email.recipients = recipients;
+    email.subject = subject;
+    email.message = message;
+
+    return email.save();
   }
 
   getEmail(emailId) {
     return this.EmailModel.findById(emailId);
+  }
+
+  async removeEmail(emailId) {
+    const email = await this.EmailModel.findById(emailId);
+    return email.remove();
   }
 
   getInboxEmails() {

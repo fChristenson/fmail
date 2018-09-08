@@ -16,6 +16,7 @@ const paths = {
     sendEmail: "/api/v1/emails",
     overview: "/api/v1/email-overview",
     email: emailId => `/api/v1/emails/${emailId}`,
+    draftEmail: emailId => `/api/v1/draft-emails/${emailId}`,
     setEmailToImportant: emailId => `/api/v1/emails/${emailId}/important`
   }
 };

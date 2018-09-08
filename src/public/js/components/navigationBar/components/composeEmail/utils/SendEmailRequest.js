@@ -1,10 +1,7 @@
-const SendEmailRequest = (recipientsString, subject, message) => {
-  const regex = /(\s|,|;|\t)/;
-  const recipients = recipientsString
-    .split(regex)
-    .filter(str => str.trim())
-    .filter(str => regex.test(str) === false);
+const recipientsStringToRecipientsArray = require("./recipientsStringToRecipientsArray");
 
+function SendEmailRequest(recipientsString, subject, message) {
+  const recipients = recipientsStringToRecipientsArray(recipientsString);
   const data = {
     recipients,
     subject,
@@ -20,6 +17,6 @@ const SendEmailRequest = (recipientsString, subject, message) => {
   };
 
   return request;
-};
+}
 
 module.exports = SendEmailRequest;

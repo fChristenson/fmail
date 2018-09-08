@@ -22,8 +22,17 @@ app.get(
   catchExceptions(async (req, res) => {
     const { emailId } = req.params;
     const email = await emailService.getEmail(emailId);
-    const now = Date.now();
-    await emailService.setEmailToViewed(emailId, now);
+    const viewedAt = Date.now();
+    await emailService.setEmailToViewed(emailId, viewedAt);
+    res.json(email);
+  })
+);
+
+app.delete(
+  "/api/v1/emails/:emailId",
+  catchExceptions(async (req, res) => {
+    const { emailId } = req.params;
+    const email = await emailService.removeEmail(emailId);
     res.json(email);
   })
 );
@@ -78,14 +87,31 @@ app.post(
   })
 );
 
+app.put(
+  "/api/v1/draft-emails/:emailId",
+  catchExceptions(async (req, res) => {
+    const { emailId } = req.params;
+    const { recipients, subject, message } = req.body;
+    const email = await emailService.updateDraftEmail(
+      emailId,
+      recipients,
+      subject,
+      message
+    );
+    res.json(email);
+  })
+);
+
 app.post(
   "/api/v1/draft-emails",
   catchExceptions(async (req, res) => {
     const { recipients, subject, message } = req.body;
+    const viewedAt = Date.now();
     const email = await emailService.createDraftEmail(
       recipients,
       subject,
-      message
+      message,
+      viewedAt
     );
     res.json(email);
   })
