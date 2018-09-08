@@ -6,6 +6,7 @@ const Route = require("react-router-dom/Route").default;
 const Inbox = require("../inbox/InboxContainer");
 const Alert = require("../alert/AlertContainer");
 const Email = require("../email/EmailContainer");
+const UtilityBar = require("../utilityBar/UtilityBarContainer");
 const Paths = require("../../config/paths");
 
 const App = ({ alertTitle, showAlert, alertText }) => {
@@ -13,6 +14,7 @@ const App = ({ alertTitle, showAlert, alertText }) => {
     <Router>
       <div>
         <Header />
+        <UtilityBar />
         <div className="content">
           <NavigationBar />
           <Route

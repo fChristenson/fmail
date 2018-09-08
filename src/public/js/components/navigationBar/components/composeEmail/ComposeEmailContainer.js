@@ -2,6 +2,7 @@ const ComposeEmail = require("./ComposeEmail");
 const { connect } = require("react-redux");
 const { ShowAlert } = require("../../../alert/alertActions");
 const { SetEmails } = require("../../../inbox/inboxActions");
+const { EMAIL_LIMIT } = require("../../../inbox/config");
 const {
   ShowComposeEmail,
   ResetForm,
@@ -60,7 +61,11 @@ const mapDispatchToProps = dispatch => {
           this.onDraftSent(pathname);
         } else if (emailType !== "draft" && emailWasStarted(form)) {
           const request = SendEmailRequest(recipients, subject, message);
-          const response = await fetch(Paths.api.draftsEmails, request);
+          const offset = 0;
+          const response = await fetch(
+            Paths.api.draftsEmails(offset, EMAIL_LIMIT),
+            request
+          );
           const json = await response.json();
 
           if (!response.ok) {
@@ -126,7 +131,8 @@ const mapDispatchToProps = dispatch => {
         dispatch(SetEmailOverview(EmailOverview(json)));
 
         if (Paths.sentMail === pathname || Paths.drafts === pathname) {
-          const response = await fetchEmails(pathname);
+          const offset = 0;
+          const response = await fetchEmails(pathname, offset, EMAIL_LIMIT);
           const json = await response.json();
           const sort = json.sort(timestampSort);
           const emails = sort.map(InboxEmail);
@@ -145,7 +151,8 @@ const mapDispatchToProps = dispatch => {
         dispatch(SetEmailOverview(EmailOverview(json)));
 
         if (Paths.drafts === pathname) {
-          const response = await fetchEmails(pathname);
+          const offset = 0;
+          const response = await fetchEmails(pathname, offset, EMAIL_LIMIT);
           const json = await response.json();
           const sort = json.sort(timestampSort);
           const emails = sort.map(InboxEmail);

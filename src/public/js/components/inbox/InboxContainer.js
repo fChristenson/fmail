@@ -3,10 +3,16 @@ const fetchEmails = require("./utils/fetchEmails")(window.fetch);
 const Paths = require("../../config/paths");
 const { ShowAlert } = require("../alert/alertActions");
 const EmailOverview = require("../navigationBar/components/navigationList/EmailOverview");
+const pathnameToEmailType = require("./utils/pathnameToEmailType");
+const { EMAIL_LIMIT } = require("./config");
 const {
   SetEmailOverview
 } = require("../navigationBar/components/navigationList/navigationListActions");
-const { SetEmails } = require("./inboxActions");
+const {
+  SetEmails,
+  SetTotalNumberOfEmails,
+  SetLastEmailOffset
+} = require("./inboxActions");
 const timestampSort = require("./utils/timestampSort");
 const InboxEmail = require("./utils/InboxEmail");
 const {
@@ -16,23 +22,39 @@ const Inbox = require("./Inbox");
 
 const mapStateToProps = state => {
   return {
-    emails: state.inbox.emails
+    pathname: state.navigationList.pathname,
+    emails: state.inbox.emails,
+    emailOffset: state.inbox.emailOffset
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchEmails: async pathname => {
+    fetchEmails: async (lastPathname, pathname, emailOffset) => {
       dispatch(SetLocation(pathname));
       try {
-        const responsePromise = fetchEmails(pathname);
-        const response2Promise = fetch(Paths.api.overview);
-        const [response, response2] = await Promise.all([
-          responsePromise,
-          response2Promise
+        let offset;
+        if (lastPathname === pathname) {
+          offset = emailOffset;
+          dispatch(SetLastEmailOffset(offset));
+        } else {
+          offset = 0;
+          dispatch(SetLastEmailOffset(offset));
+        }
+        const promise = fetchEmails(pathname, offset, EMAIL_LIMIT);
+        const promise2 = fetch(Paths.api.overview);
+        const emailType = pathnameToEmailType(pathname);
+        const promise3 = fetch(Paths.api.emailCount(emailType));
+        const [response, response2, response3] = await Promise.all([
+          promise,
+          promise2,
+          promise3
         ]);
         const json = await response.json();
         const json2 = await response2.json();
+        const json3 = await response3.json();
+        const totalEmails = json3.count;
+        dispatch(SetTotalNumberOfEmails(totalEmails));
         const overview = EmailOverview(json2);
         dispatch(SetEmailOverview(overview));
         const sort = json.sort(timestampSort);

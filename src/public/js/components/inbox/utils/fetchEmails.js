@@ -1,21 +1,21 @@
 const Paths = require("../../../config/paths");
 
-module.exports = fetch => pathname => {
+module.exports = fetch => (pathname, offset, limit) => {
   switch (pathname) {
     case Paths.inbox:
-      return fetch(Paths.api.inboxEmails);
+      return fetch(Paths.api.inboxEmails(offset, limit));
 
     case Paths.important:
-      return fetch(Paths.api.importantEmails);
+      return fetch(Paths.api.importantEmails(offset, limit));
 
     case Paths.sentMail:
-      return fetch(Paths.api.sentMailEmails);
+      return fetch(Paths.api.sentMailEmails(offset, limit));
 
     case Paths.drafts:
-      return fetch(Paths.api.draftsEmails);
+      return fetch(Paths.api.draftsEmails(offset, limit));
 
     case Paths.spam:
-      return fetch(Paths.api.spamEmails);
+      return fetch(Paths.api.spamEmails(offset, limit));
 
     default:
       throw new Error(`${pathname} is not a valid path`);

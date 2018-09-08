@@ -88,9 +88,12 @@ describe("EmailService", () => {
       const query = {
         $or: [{ type: "outgoing" }, { type: "sent" }]
       };
+      const skip = 0;
+      const limit = 0;
+      const options = { skip, limit };
       const emailService = new EmailService(MockEmailModel);
-      emailService.getSentEmails();
-      expect(mockFind).toBeCalledWith(query);
+      emailService.getSentEmails(skip, limit);
+      expect(mockFind).toBeCalledWith(query, null, options);
     });
   });
 
@@ -168,9 +171,12 @@ describe("EmailService", () => {
         find: mockFind
       };
       const query = { isImportant: true };
+      const skip = 0;
+      const limit = 0;
+      const options = { skip, limit };
       const emailService = new EmailService(MockEmailModel);
-      emailService.getImportantEmails();
-      expect(mockFind).toBeCalledWith(query);
+      emailService.getImportantEmails(skip, limit);
+      expect(mockFind).toBeCalledWith(query, null, options);
     });
   });
 
@@ -181,9 +187,12 @@ describe("EmailService", () => {
         find: mockFind
       };
       const query = { type: "received", isSpam: false };
+      const skip = 0;
+      const limit = 0;
+      const options = { skip, limit };
       const emailService = new EmailService(MockEmailModel);
-      emailService.getInboxEmails();
-      expect(mockFind).toBeCalledWith(query);
+      emailService.getInboxEmails(skip, limit);
+      expect(mockFind).toBeCalledWith(query, null, options);
     });
   });
 
@@ -217,9 +226,12 @@ describe("EmailService", () => {
         find: mockFind
       };
       const query = { isSpam: true };
+      const skip = 0;
+      const limit = 0;
+      const options = { skip, limit };
       const emailService = new EmailService(MockEmailModel);
-      emailService.getSpamEmails();
-      expect(mockFind).toBeCalledWith(query);
+      emailService.getSpamEmails(skip, limit);
+      expect(mockFind).toBeCalledWith(query, null, options);
     });
   });
 
@@ -230,9 +242,12 @@ describe("EmailService", () => {
         find: mockFind
       };
       const query = { type: "draft" };
+      const skip = 0;
+      const limit = 0;
+      const options = { skip, limit };
       const emailService = new EmailService(MockEmailModel);
-      emailService.getDraftEmails();
-      expect(mockFind).toBeCalledWith(query);
+      emailService.getDraftEmails(skip, limit);
+      expect(mockFind).toBeCalledWith(query, null, options);
     });
   });
 

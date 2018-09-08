@@ -1,4 +1,8 @@
-const { SET_EMAILS } = require("./inboxEvents");
+const {
+  SET_EMAILS,
+  SET_LAST_EMAIL_OFFSET,
+  SET_TOTAL_NUMBER_OF_EMAILS
+} = require("./inboxEvents");
 
 function SetEmails(emails) {
   return {
@@ -7,4 +11,22 @@ function SetEmails(emails) {
   };
 }
 
-module.exports.SetEmails = SetEmails;
+function SetTotalNumberOfEmails(count) {
+  return {
+    type: SET_TOTAL_NUMBER_OF_EMAILS,
+    value: count
+  };
+}
+
+function SetLastEmailOffset(number) {
+  return {
+    type: SET_LAST_EMAIL_OFFSET,
+    value: number
+  };
+}
+
+module.exports = {
+  SetEmails,
+  SetLastEmailOffset,
+  SetTotalNumberOfEmails
+};

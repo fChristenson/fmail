@@ -9,11 +9,26 @@ const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "..", "dist")));
 
+const MAX_EMAILS_PER_PAGE = 50;
+
 app.get(
   "/api/v1/inbox-emails",
   catchExceptions(async (req, res) => {
-    const email = await emailService.getInboxEmails();
+    let { offset, limit } = req.query;
+    offset = parseInt(offset);
+    limit = parseInt(limit);
+    limit = Math.min(limit, MAX_EMAILS_PER_PAGE);
+    const email = await emailService.getInboxEmails(offset, limit);
     res.json(email);
+  })
+);
+
+app.get(
+  "/api/v1/emails/count",
+  catchExceptions(async (req, res) => {
+    const { emailType } = req.query;
+    const count = await emailService.countEmails(emailType);
+    res.json({ count });
   })
 );
 
@@ -40,7 +55,11 @@ app.delete(
 app.get(
   "/api/v1/important-emails",
   catchExceptions(async (req, res) => {
-    const email = await emailService.getImportantEmails();
+    let { offset, limit } = req.query;
+    offset = parseInt(offset);
+    limit = parseInt(limit);
+    limit = Math.min(limit, MAX_EMAILS_PER_PAGE);
+    const email = await emailService.getImportantEmails(offset, limit);
     res.json(email);
   })
 );
@@ -48,7 +67,11 @@ app.get(
 app.get(
   "/api/v1/sent-emails",
   catchExceptions(async (req, res) => {
-    const email = await emailService.getSentEmails();
+    let { offset, limit } = req.query;
+    offset = parseInt(offset);
+    limit = parseInt(limit);
+    limit = Math.min(limit, MAX_EMAILS_PER_PAGE);
+    const email = await emailService.getSentEmails(offset, limit);
     res.json(email);
   })
 );
@@ -64,7 +87,11 @@ app.get(
 app.get(
   "/api/v1/draft-emails",
   catchExceptions(async (req, res) => {
-    const draftEmails = await emailService.getDraftEmails();
+    let { offset, limit } = req.query;
+    offset = parseInt(offset);
+    limit = parseInt(limit);
+    limit = Math.min(limit, MAX_EMAILS_PER_PAGE);
+    const draftEmails = await emailService.getDraftEmails(offset, limit);
     res.json(draftEmails);
   })
 );
@@ -72,7 +99,11 @@ app.get(
 app.get(
   "/api/v1/spam-emails",
   catchExceptions(async (req, res) => {
-    const spam = await emailService.getSpamEmails();
+    let { offset, limit } = req.query;
+    offset = parseInt(offset);
+    limit = parseInt(limit);
+    limit = Math.min(limit, MAX_EMAILS_PER_PAGE);
+    const spam = await emailService.getSpamEmails(offset, limit);
     res.json(spam);
   })
 );

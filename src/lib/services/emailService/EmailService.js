@@ -14,6 +14,41 @@ class EmailService {
     this.getEmailOverview = this.getEmailOverview.bind(this);
     this.setEmailToViewed = this.setEmailToViewed.bind(this);
     this.removeEmail = this.removeEmail.bind(this);
+    this.countEmails = this.countEmails.bind(this);
+  }
+
+  countEmails(emailType) {
+    switch (emailType) {
+      case "inbox":
+        return this.EmailModel.count({
+          type: "received",
+          isSpam: false
+        });
+
+      case "important":
+        return this.EmailModel.count({
+          isImportant: true
+        });
+
+      case "sent":
+        return this.EmailModel.count({
+          $or: [{ type: "outgoing" }, { type: "sent" }]
+        });
+
+      case "drafts":
+        return this.EmailModel.count({
+          type: "draft"
+        });
+
+      case "spam":
+        return this.EmailModel.count({
+          type: "received",
+          isSpam: true
+        });
+
+      default:
+        throw new Error(`${emailType} is not a valid emailType`);
+    }
   }
 
   async setEmailToViewed(emailId, viewedAt) {
@@ -79,16 +114,25 @@ class EmailService {
     return email.remove();
   }
 
-  getInboxEmails() {
-    return this.EmailModel.find({ type: "received", isSpam: false });
+  getInboxEmails(offset, limit) {
+    return this.EmailModel.find({ type: "received", isSpam: false }, null, {
+      skip: offset,
+      limit
+    });
   }
 
-  getSpamEmails() {
-    return this.EmailModel.find({ isSpam: true });
+  getSpamEmails(offset, limit) {
+    return this.EmailModel.find({ isSpam: true }, null, {
+      skip: offset,
+      limit
+    });
   }
 
-  getImportantEmails() {
-    return this.EmailModel.find({ isImportant: true });
+  getImportantEmails(offset, limit) {
+    return this.EmailModel.find({ isImportant: true }, null, {
+      skip: offset,
+      limit
+    });
   }
 
   async setEmailAsImportant(emailId, isImportant) {
@@ -97,14 +141,24 @@ class EmailService {
     return email.save();
   }
 
-  getDraftEmails() {
-    return this.EmailModel.find({ type: "draft" });
+  getDraftEmails(offset, limit) {
+    return this.EmailModel.find({ type: "draft" }, null, {
+      skip: offset,
+      limit
+    });
   }
 
-  getSentEmails() {
-    return this.EmailModel.find({
-      $or: [{ type: "outgoing" }, { type: "sent" }]
-    });
+  getSentEmails(offset, limit) {
+    return this.EmailModel.find(
+      {
+        $or: [{ type: "outgoing" }, { type: "sent" }]
+      },
+      null,
+      {
+        skip: offset,
+        limit
+      }
+    );
   }
 }
 

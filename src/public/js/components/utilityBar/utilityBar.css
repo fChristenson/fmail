@@ -1,0 +1,16 @@
+.utility-bar {
+  padding: var(--margin-s) var(--margin-m);
+  display: flex;
+  justify-content: flex-end;
+  border-bottom: 1px solid var(--background-gray);
+}
+
+.utility-bar__pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.utility-bar__pagination-numbers {
+  margin-right: var(--margin-m);
+}

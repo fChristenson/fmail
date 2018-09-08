@@ -8,13 +8,19 @@ const paths = {
   emailTemplate: "/emails/:emailId",
   email: emailId => `/emails/${emailId}`,
   api: {
-    inboxEmails: "/api/v1/inbox-emails",
-    importantEmails: "/api/v1/important-emails",
-    sentMailEmails: "/api/v1/sent-emails",
-    draftsEmails: "/api/v1/draft-emails",
-    spamEmails: "/api/v1/spam-emails",
+    inboxEmails: (offset, limit) =>
+      `/api/v1/inbox-emails?offset=${offset}&limit=${limit}`,
+    importantEmails: (offset, limit) =>
+      `/api/v1/important-emails?offset=${offset}&limit=${limit}`,
+    sentMailEmails: (offset, limit) =>
+      `/api/v1/sent-emails?offset=${offset}&limit=${limit}`,
+    draftsEmails: (offset, limit) =>
+      `/api/v1/draft-emails?offset=${offset}&limit=${limit}`,
+    spamEmails: (offset, limit) =>
+      `/api/v1/spam-emails?offset=${offset}&limit=${limit}`,
     sendEmail: "/api/v1/emails",
     overview: "/api/v1/email-overview",
+    emailCount: type => `/api/v1/emails/count?emailType=${type}`,
     email: emailId => `/api/v1/emails/${emailId}`,
     draftEmail: emailId => `/api/v1/draft-emails/${emailId}`,
     setEmailToImportant: emailId => `/api/v1/emails/${emailId}/important`
