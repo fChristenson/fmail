@@ -1,18 +1,24 @@
+const Paths = require("../../../config/paths");
+
 module.exports = pathname => {
   switch (pathname) {
-    case "/inbox":
+    case Paths.root:
+    case Paths.inbox:
       return "inbox";
 
-    case "/important":
+    case Paths.searchTemplate:
+      return "search";
+
+    case Paths.important:
       return "important";
 
-    case "/sent-mail":
+    case Paths.sentMail:
       return "sent";
 
-    case "/drafts":
+    case Paths.drafts:
       return "drafts";
 
-    case "/spam":
+    case Paths.spam:
       return "spam";
 
     default:

@@ -24,10 +24,22 @@ app.get(
 );
 
 app.get(
+  "/api/v1/search",
+  catchExceptions(async (req, res) => {
+    let { q, offset, limit } = req.query;
+    offset = parseInt(offset);
+    limit = parseInt(limit);
+    limit = Math.min(limit, MAX_EMAILS_PER_PAGE);
+    const emails = await emailService.search(q, offset, limit);
+    res.json(emails);
+  })
+);
+
+app.get(
   "/api/v1/emails/count",
   catchExceptions(async (req, res) => {
-    const { emailType } = req.query;
-    const count = await emailService.countEmails(emailType);
+    const { emailType, q } = req.query;
+    const count = await emailService.countEmails(emailType, q);
     res.json({ count });
   })
 );
@@ -164,6 +176,7 @@ app.all("*", (req, res) => {
 });
 
 app.use((error, req, res, next) => {
+  console.error(error);
   res.status(500).json({ error: error.message });
 });
 

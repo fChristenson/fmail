@@ -1,6 +1,7 @@
 const {
   SET_EMAILS,
   SET_LAST_EMAIL_OFFSET,
+  QUERY_WAS_MADE,
   SET_TOTAL_NUMBER_OF_EMAILS
 } = require("./inboxEvents");
 
@@ -25,7 +26,15 @@ function SetLastEmailOffset(number) {
   };
 }
 
+function QueryWasMade(queryWasMade) {
+  return {
+    type: QUERY_WAS_MADE,
+    value: queryWasMade
+  };
+}
+
 module.exports = {
+  QueryWasMade,
   SetEmails,
   SetLastEmailOffset,
   SetTotalNumberOfEmails

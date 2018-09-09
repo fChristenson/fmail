@@ -11,7 +11,8 @@ const {
 const {
   SetEmails,
   SetTotalNumberOfEmails,
-  SetLastEmailOffset
+  SetLastEmailOffset,
+  QueryWasMade
 } = require("./inboxActions");
 const timestampSort = require("./utils/timestampSort");
 const InboxEmail = require("./utils/InboxEmail");
@@ -20,17 +21,20 @@ const {
 } = require("../navigationBar/components/navigationList/navigationListActions");
 const Inbox = require("./Inbox");
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, { location }) => {
   return {
+    q: new URLSearchParams(location.search).get("q"),
     pathname: state.navigationList.pathname,
     emails: state.inbox.emails,
-    emailOffset: state.inbox.emailOffset
+    emailOffset: state.inbox.emailOffset,
+    queryWasMade: state.inbox.queryWasMade
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchEmails: async (lastPathname, pathname, emailOffset) => {
+    onSearch: () => dispatch(QueryWasMade(false)),
+    fetchEmails: async (lastPathname, pathname, emailOffset, query) => {
       dispatch(SetLocation(pathname));
       try {
         let offset;
@@ -44,7 +48,7 @@ const mapDispatchToProps = dispatch => {
         const promise = fetchEmails(pathname, offset, EMAIL_LIMIT);
         const promise2 = fetch(Paths.api.overview);
         const emailType = pathnameToEmailType(pathname);
-        const promise3 = fetch(Paths.api.emailCount(emailType));
+        const promise3 = fetch(Paths.api.emailCount(emailType, query));
         const [response, response2, response3] = await Promise.all([
           promise,
           promise2,

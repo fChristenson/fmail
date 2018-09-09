@@ -1,6 +1,8 @@
 const paths = {
   root: "/",
   inbox: "/inbox",
+  search: q => `/search?q=${q}`,
+  searchTemplate: "/search",
   important: "/important",
   sentMail: "/sent-mail",
   drafts: "/drafts",
@@ -8,6 +10,8 @@ const paths = {
   emailTemplate: "/emails/:emailId",
   email: emailId => `/emails/${emailId}`,
   api: {
+    search: (q, offset, limit) =>
+      `/api/v1/search?q=${q}&offset=${offset}&limit=${limit}`,
     inboxEmails: (offset, limit) =>
       `/api/v1/inbox-emails?offset=${offset}&limit=${limit}`,
     importantEmails: (offset, limit) =>
@@ -20,7 +24,7 @@ const paths = {
       `/api/v1/spam-emails?offset=${offset}&limit=${limit}`,
     sendEmail: "/api/v1/emails",
     overview: "/api/v1/email-overview",
-    emailCount: type => `/api/v1/emails/count?emailType=${type}`,
+    emailCount: (type, q) => `/api/v1/emails/count?emailType=${type}&q=${q}`,
     email: emailId => `/api/v1/emails/${emailId}`,
     draftEmail: emailId => `/api/v1/draft-emails/${emailId}`,
     setEmailToImportant: emailId => `/api/v1/emails/${emailId}/important`

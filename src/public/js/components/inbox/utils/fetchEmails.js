@@ -2,8 +2,13 @@ const Paths = require("../../../config/paths");
 
 module.exports = fetch => (pathname, offset, limit) => {
   switch (pathname) {
+    case Paths.root:
     case Paths.inbox:
       return fetch(Paths.api.inboxEmails(offset, limit));
+
+    case Paths.searchTemplate:
+      const q = new URLSearchParams(window.location.search).get("q");
+      return fetch(Paths.api.search(q, offset, limit));
 
     case Paths.important:
       return fetch(Paths.api.importantEmails(offset, limit));
