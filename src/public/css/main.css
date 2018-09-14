@@ -2,6 +2,7 @@
 @import "../js/components/App/app.css";
 @import "../js/components/header/header.css";
 @import "../js/components/inbox/inbox.css";
+@import "../js/components/register/register.css";
 @import "../js/components/email/email.css";
 @import "../js/components/utilityBar/utilityBar.css";
 @import "../js/components/navigationBar/navigationBar.css";

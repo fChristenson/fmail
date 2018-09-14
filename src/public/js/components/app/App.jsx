@@ -1,31 +1,20 @@
 const React = require("react");
-const Header = require("../header/HeaderContainer");
-const NavigationBar = require("../navigationBar/NavigationBarContainer");
 const Router = require("react-router-dom/BrowserRouter").default;
-const Route = require("react-router-dom/Route").default;
-const Inbox = require("../inbox/InboxContainer");
-const Alert = require("../alert/AlertContainer");
-const Email = require("../email/EmailContainer");
-const UtilityBar = require("../utilityBar/UtilityBarContainer");
+const Switch = require("react-router-dom/Switch").default;
+const Register = require("../register/RegisterContainer");
 const Paths = require("../../config/paths");
+const Route = require("react-router-dom/Route").default;
+const Alert = require("../alert/AlertContainer");
+const AppComponent = require("./AppComponent");
 
 const App = ({ alertTitle, showAlert, alertText }) => {
   return (
     <Router>
       <div>
-        <Header />
-        <UtilityBar />
-        <div className="content">
-          <NavigationBar />
-          <Route exact path={Paths.root} component={Inbox} />
-          <Route path={Paths.emailTemplate} component={Email} />
-          <Route path={Paths.inbox} component={Inbox} />
-          <Route path={Paths.important} component={Inbox} />
-          <Route path={Paths.searchTemplate} component={Inbox} />
-          <Route path={Paths.sentMail} component={Inbox} />
-          <Route path={Paths.drafts} component={Inbox} />
-          <Route path={Paths.spam} component={Inbox} />
-        </div>
+        <Switch>
+          <Route path={Paths.register} component={Register} />
+          <Route component={AppComponent} />
+        </Switch>
         <Alert title={alertTitle} open={showAlert} text={alertText} />
       </div>
     </Router>

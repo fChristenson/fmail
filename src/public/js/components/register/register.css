@@ -1,0 +1,15 @@
+.register {
+  max-width: 400px;
+  margin: var(--margin-l) auto;
+}
+
+.register__h1 {
+  text-align: center;
+}
+
+.register__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 300px;
+}

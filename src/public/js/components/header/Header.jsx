@@ -2,7 +2,7 @@ const React = require("react");
 const Input = require("@material-ui/core/Input").default;
 const Button = require("@material-ui/core/Button").default;
 const SearchIcon = require("@material-ui/icons/Search").default;
-const { withRouter } = require("react-router-dom");
+const withRouter = require("react-router-dom/withRouter").default;
 const Paths = require("../../config/paths");
 
 class Header extends React.Component {

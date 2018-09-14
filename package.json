@@ -26,8 +26,11 @@
   "dependencies": {
     "@material-ui/core": "^1.4.3",
     "@material-ui/icons": "^2.0.2",
+    "bcrypt": "^3.0.0",
+    "connect-redis": "^3.3.3",
     "elasticsearch": "^15.1.1",
     "express": "^4.16.3",
+    "express-session": "^1.15.6",
     "joi": "^13.6.0",
     "mongoose": "^5.2.9",
     "react": "^16.4.2",
