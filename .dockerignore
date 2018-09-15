@@ -1,0 +1,8 @@
+node_modules/
+generate*
+README.md
+postcss.config.js
+webpack.config.js
+Dockerfile
+docker-compose.yml
+/**/__tests__/

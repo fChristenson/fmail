@@ -15,3 +15,8 @@ const key = fs.readFileSync(keypath);
 const cert = fs.readFileSync(crtpath);
 
 https.createServer({ key, cert }, app).listen(process.env.PORT || 3000);
+
+process.on("unhandledRejection", error => {
+  console.error(error);
+  process.exit(1);
+});

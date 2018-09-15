@@ -3,6 +3,7 @@ const path = require("path");
 const session = require("express-session");
 const RedisStore = require("connect-redis")(session);
 const { emailRoutes, userRoutes } = require("./routes");
+const logger = require("./lib/utils/logger");
 const app = express();
 
 app.disable("x-powered-by");
@@ -34,7 +35,7 @@ app.all("*", (req, res) => {
 });
 
 app.use((error, req, res, next) => {
-  console.error(error);
+  logger.error(error);
   res.status(error.status || 500).json({ error: error.message });
 });
 

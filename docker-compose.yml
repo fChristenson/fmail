@@ -1,16 +1,30 @@
 version: "3"
 
 services:
+  app:
+    build: .
+    ports:
+      - "443:443"
+    environment:
+      - MONGO_URI=mongodb://db/fmail
+      - PORT=443
+      - REDIS_PORT=6379
+      - REDIS_HOST=redis
+      - ELASTICSEARCH_URI=search:9200
+    volumes:
+      - /tmp/:/tmp/
+    depends_on:
+      - db
+      - redis
+      - search
   db:
     image: mongo
     ports:
       - "27017:27017"
-
   search:
     image: elasticsearch
     ports:
       - "9200:9200"
-  
   redis:
     image: redis
     ports:
