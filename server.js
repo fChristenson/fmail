@@ -7,8 +7,11 @@ mongoose.connect(process.env.MONGO_URI || "mongodb://0.0.0.0:27017/fmail", {
   useNewUrlParser: true
 });
 
-const key = fs.readFileSync("./certificates/private.key");
-const cert = fs.readFileSync("./certificates/certificate.crt");
-const ca = fs.readFileSync("./certificates/ca.crt");
+const keypath =
+  process.env.CERT_PRIVATE_KEY_PATH || "./certificates/localhost.key";
+const crtpath = process.env.CERT_PATH || "./certificates/localhost.crt";
 
-https.createServer({ key, cert, ca }, app).listen(3000);
+const key = fs.readFileSync(keypath);
+const cert = fs.readFileSync(crtpath);
+
+https.createServer({ key, cert }, app).listen(process.env.PORT || 3000);

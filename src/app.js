@@ -21,7 +21,7 @@ app.use(
       sameSite: true,
       maxAge: 3600000, // 60 * 60 * 1000
       httpOnly: true,
-      secure: false //TODO: enable when we are on https
+      secure: true
     }
   })
 );
