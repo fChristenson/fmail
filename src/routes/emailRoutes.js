@@ -15,7 +15,11 @@ router.get(
     offset = parseInt(offset);
     limit = parseInt(limit);
     limit = Math.min(limit, MAX_EMAILS_PER_PAGE);
-    const email = await emailService.getInboxEmails(offset, limit);
+    const email = await emailService.getInboxEmails(
+      req.session.userId,
+      offset,
+      limit
+    );
     res.json(email);
   })
 );
@@ -28,7 +32,12 @@ router.get(
     offset = parseInt(offset);
     limit = parseInt(limit);
     limit = Math.min(limit, MAX_EMAILS_PER_PAGE);
-    const emails = await emailService.search(q, offset, limit);
+    const emails = await emailService.search(
+      req.session.userId,
+      q,
+      offset,
+      limit
+    );
     res.json(emails);
   })
 );
@@ -38,7 +47,11 @@ router.get(
   userIsLoggedIn,
   catchExceptions(async (req, res) => {
     const { emailType, q } = req.query;
-    const count = await emailService.countEmails(emailType, q);
+    const count = await emailService.countEmails(
+      req.session.userId,
+      emailType,
+      q
+    );
     res.json({ count });
   })
 );
@@ -48,9 +61,9 @@ router.get(
   userIsLoggedIn,
   catchExceptions(async (req, res) => {
     const { emailId } = req.params;
-    const email = await emailService.getEmail(emailId);
+    const email = await emailService.getEmail(req.session.userId, emailId);
     const viewedAt = Date.now();
-    await emailService.setEmailToViewed(emailId, viewedAt);
+    await emailService.setEmailToViewed(req.session.userId, emailId, viewedAt);
     res.json(email);
   })
 );
@@ -60,7 +73,7 @@ router.delete(
   userIsLoggedIn,
   catchExceptions(async (req, res) => {
     const { emailId } = req.params;
-    const email = await emailService.removeEmail(emailId);
+    const email = await emailService.removeEmail(req.session.userId, emailId);
     res.json(email);
   })
 );
@@ -73,7 +86,11 @@ router.get(
     offset = parseInt(offset);
     limit = parseInt(limit);
     limit = Math.min(limit, MAX_EMAILS_PER_PAGE);
-    const email = await emailService.getImportantEmails(offset, limit);
+    const email = await emailService.getImportantEmails(
+      req.session.userId,
+      offset,
+      limit
+    );
     res.json(email);
   })
 );
@@ -86,7 +103,11 @@ router.get(
     offset = parseInt(offset);
     limit = parseInt(limit);
     limit = Math.min(limit, MAX_EMAILS_PER_PAGE);
-    const email = await emailService.getSentEmails(offset, limit);
+    const email = await emailService.getSentEmails(
+      req.session.userId,
+      offset,
+      limit
+    );
     res.json(email);
   })
 );
@@ -95,7 +116,9 @@ router.get(
   "/api/v1/email-overview",
   userIsLoggedIn,
   catchExceptions(async (req, res) => {
-    const emailOverview = await emailService.getEmailOverview();
+    const emailOverview = await emailService.getEmailOverview(
+      req.session.userId
+    );
     res.json(emailOverview);
   })
 );
@@ -108,7 +131,11 @@ router.get(
     offset = parseInt(offset);
     limit = parseInt(limit);
     limit = Math.min(limit, MAX_EMAILS_PER_PAGE);
-    const draftEmails = await emailService.getDraftEmails(offset, limit);
+    const draftEmails = await emailService.getDraftEmails(
+      req.session.userId,
+      offset,
+      limit
+    );
     res.json(draftEmails);
   })
 );
@@ -121,7 +148,11 @@ router.get(
     offset = parseInt(offset);
     limit = parseInt(limit);
     limit = Math.min(limit, MAX_EMAILS_PER_PAGE);
-    const spam = await emailService.getSpamEmails(offset, limit);
+    const spam = await emailService.getSpamEmails(
+      req.session.userId,
+      offset,
+      limit
+    );
     res.json(spam);
   })
 );
@@ -132,7 +163,12 @@ router.post(
   userIsLoggedIn,
   catchExceptions(async (req, res) => {
     const { recipients, subject, message } = req.body;
-    const email = await emailService.createEmail(recipients, subject, message);
+    const email = await emailService.createEmail(
+      req.session.userId,
+      recipients,
+      subject,
+      message
+    );
     res.json(email);
   })
 );
@@ -144,6 +180,7 @@ router.put(
     const { emailId } = req.params;
     const { recipients, subject, message } = req.body;
     const email = await emailService.updateDraftEmail(
+      req.session.userId,
       emailId,
       recipients,
       subject,
@@ -160,6 +197,7 @@ router.post(
     const { recipients, subject, message } = req.body;
     const viewedAt = Date.now();
     const email = await emailService.createDraftEmail(
+      req.session.userId,
       recipients,
       subject,
       message,
@@ -176,7 +214,11 @@ router.post(
   catchExceptions(async (req, res) => {
     const { emailId } = req.params;
     const { isImportant } = req.body;
-    const email = await emailService.setEmailAsImportant(emailId, isImportant);
+    const email = await emailService.setEmailAsImportant(
+      req.session.userId,
+      emailId,
+      isImportant
+    );
     res.json(email);
   })
 );

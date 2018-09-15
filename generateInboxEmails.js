@@ -18,11 +18,12 @@ Morbi non arcu risus quis. Lobortis elementum nibh tellus molestie nunc non blan
 Sed faucibus turpis in eu mi bibendum neque. Nibh nisl condimentum id venenatis a condimentum vitae sapien pellentesque. Auctor urna nunc id cursus metus aliquam. Egestas dui id ornare arcu odio ut sem. Eu augue ut lectus arcu. Ultrices eros in cursus turpis massa tincidunt dui. Dolor sit amet consectetur adipiscing. Facilisis magna etiam tempor orci eu lobortis. Ac felis donec et odio pellentesque diam volutpat commodo sed. Aliquam purus sit amet luctus venenatis lectus magna fringilla. Erat nam at lectus urna duis convallis. In hendrerit gravida rutrum quisque non. Amet cursus sit amet dictum. Duis ut diam quam nulla porttitor massa id neque. Rhoncus mattis rhoncus urna neque viverra justo nec.`;
 
 for (let i = 0; i < 30; i++) {
+  const userId = process.argv[2];
   const recipients = ["me@fmail.com"];
   const subject = "This is a subject";
   const message = lorem;
   const type = "received";
-  const email = new EmailModel({ recipients, subject, message, type });
+  const email = new EmailModel({ userId, recipients, subject, message, type });
   promises.push(email.save());
 }
 

@@ -2,8 +2,9 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const EmailSchema = new Schema({
+  userId: { type: String, required: true },
   recipients: { type: Array },
-  from: { type: String, default: "me@fmail.com" },
+  from: { type: String, required: true },
   subject: { type: String, required: true },
   isImportant: { type: Boolean, default: false },
   isSpam: { type: Boolean, default: false },

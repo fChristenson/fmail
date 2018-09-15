@@ -20,8 +20,10 @@ class AppComponent extends React.Component {
     const response = await fetch(Paths.api.isLoggedIn, options);
 
     if (!response.ok && response.status === 401) {
-      this.props.history.push(Paths.register); //TODO: change to login when login page is done
+      this.props.history.push(Paths.login);
     } else {
+      const json = await response.json();
+      this.props.onShow(json);
       this.setState({ show: true });
     }
   }

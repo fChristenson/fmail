@@ -9,6 +9,7 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onLogout = this.onLogout.bind(this);
   }
 
   onSubmit(event) {
@@ -24,6 +25,11 @@ class Header extends React.Component {
     }
   }
 
+  onLogout(event) {
+    event.preventDefault();
+    this.props.onLogout(this.props.history);
+  }
+
   render() {
     return (
       <header className="header">
@@ -34,6 +40,16 @@ class Header extends React.Component {
             <SearchIcon />
           </Button>
         </form>
+        <span className="header__email">{this.props.email}</span>
+        <Button
+          className="header__logout"
+          onClick={this.onLogout}
+          href={Paths.api.logout}
+          variant="contained"
+          color="secondary"
+        >
+          Logout
+        </Button>
       </header>
     );
   }

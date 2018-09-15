@@ -2,6 +2,7 @@ const paths = {
   root: "/",
   any: "*",
   register: "/register",
+  login: "/login",
   inbox: "/inbox",
   search: q => `/search?q=${q}`,
   searchTemplate: "/search",
@@ -13,6 +14,8 @@ const paths = {
   email: emailId => `/emails/${emailId}`,
   api: {
     register: "/api/v1/users",
+    login: "/api/v1/login",
+    logout: "/api/v1/logout",
     isLoggedIn: "/api/v1/users/logged-in",
     search: (q, offset, limit) =>
       `/api/v1/search?q=${q}&offset=${offset}&limit=${limit}`,

@@ -16,7 +16,8 @@ describe("EmailModel", () => {
     EmailModel.remove({}, done);
   });
 
-  it("correctly serialises the model", async () => {
+  it("correctly serializes the model", async () => {
+    const userId = "id";
     const subject = "foo";
     const message = "bar";
     const from = "me@fmail.com";
@@ -24,6 +25,8 @@ describe("EmailModel", () => {
     const timestamp = new Date("2018-08-23T16:42:41.897Z");
     const recipients = [];
     const email = new EmailModel({
+      userId,
+      from,
       recipients,
       subject,
       message,
@@ -34,10 +37,11 @@ describe("EmailModel", () => {
     const emailInDatabase = await EmailModel.findById(email.id);
     const expected = {
       recipients,
-      from,
       isImportant: false,
       isSpam: false,
       _id: email.id,
+      userId,
+      from,
       subject,
       message,
       type,

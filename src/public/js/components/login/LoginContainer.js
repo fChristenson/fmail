@@ -1,10 +1,10 @@
 const { connect } = require("react-redux");
-const Register = require("./Register");
+const Login = require("./Login");
 const Paths = require("../../config/paths");
-const RegisterRequest = require("./RegisterRequest");
+const LoginRequest = require("./LoginRequest");
+const { SetUser } = require("./loginActions");
+const User = require("./User");
 const { ShowAlert } = require("../alert/alertActions");
-const { SetUser } = require("../login/loginActions");
-const User = require("../login/User");
 
 const mapStateToProps = state => {
   return {};
@@ -12,22 +12,19 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    onRegister: (event, history) => {
+      event.preventDefault();
+      history.push(Paths.register);
+    },
     onSubmit: async (event, history) => {
       event.preventDefault();
       const email = event.target.email.value;
       const password = event.target.password.value;
-      const confirmation = event.target.confirmation.value;
 
-      if (password !== confirmation) {
-        const title = "Invalid password";
-        const message = "Password does not match confirmation";
-        return dispatch(ShowAlert(title, message));
-      }
-
-      const registerRequest = RegisterRequest(email, password);
+      const loginRequest = LoginRequest(email, password);
 
       try {
-        const response = await fetch(Paths.api.register, registerRequest);
+        const response = await fetch(Paths.api.login, loginRequest);
         const json = await response.json();
         if (!response.ok) {
           throw new Error(json.error);
@@ -43,4 +40,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-module.exports = connect(mapStateToProps, mapDispatchToProps)(Register);
+module.exports = connect(mapStateToProps, mapDispatchToProps)(Login);

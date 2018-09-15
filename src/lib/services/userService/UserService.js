@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const StatusError = require("../../utils/StatusError");
 
 const SALT_ROUNDS = 10;
 
@@ -8,6 +9,12 @@ class UserService {
     this.getUserByEmail = this.getUserByEmail.bind(this);
     this.createUser = this.createUser.bind(this);
     this.registerUser = this.registerUser.bind(this);
+    this.getUser = this.getUser.bind(this);
+    this.login = this.login.bind(this);
+  }
+
+  getUser(userId) {
+    return this.UserModel.findById(userId);
   }
 
   getUserByEmail(email) {
@@ -22,11 +29,27 @@ class UserService {
     const maybeUser = await this.getUserByEmail(email);
 
     if (maybeUser) {
-      throw new Error("There is already a user with that email");
+      throw new StatusError("There is already a user with that email", 400);
     }
 
     const hash = await bcrypt.hash(password, SALT_ROUNDS);
     return this.createUser(email, hash);
+  }
+
+  async login(email, password) {
+    const maybeUser = await this.getUserByEmail(email);
+
+    if (!maybeUser) {
+      throw new StatusError("Invalid username or password", 401);
+    }
+
+    const passwordMatch = await bcrypt.compare(password, maybeUser.password);
+
+    if (!passwordMatch) {
+      throw new StatusError("Invalid username or password", 401);
+    }
+
+    return maybeUser;
   }
 }
 

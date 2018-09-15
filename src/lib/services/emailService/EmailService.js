@@ -1,5 +1,6 @@
 class EmailService {
-  constructor(EmailModel, searchService) {
+  constructor(EmailModel, searchService, userService) {
+    this.userService = userService;
     this.searchService = searchService;
     this.EmailModel = EmailModel;
     this.createEmail = this.createEmail.bind(this);
@@ -19,42 +20,53 @@ class EmailService {
     this.search = this.search.bind(this);
   }
 
-  async search(q, offset, limit) {
-    const results = await this.searchService.findEmail(q, offset, limit);
+  async search(userId, q, offset, limit) {
+    const results = await this.searchService.findEmail(
+      userId,
+      q,
+      offset,
+      limit
+    );
     const idArray = results.map(res => res._id);
     return this.EmailModel.find({
-      _id: { $in: idArray }
+      _id: { $in: idArray },
+      userId
     });
   }
 
-  countEmails(emailType, q) {
+  countEmails(userId, emailType, q) {
     switch (emailType) {
       case "search":
-        return this.searchService.countFoundEmails(q);
+        return this.searchService.countFoundEmails(userId, q);
 
       case "inbox":
         return this.EmailModel.count({
+          userId,
           type: "received",
           isSpam: false
         });
 
       case "important":
         return this.EmailModel.count({
+          userId,
           isImportant: true
         });
 
       case "sent":
         return this.EmailModel.count({
+          userId,
           $or: [{ type: "outgoing" }, { type: "sent" }]
         });
 
       case "drafts":
         return this.EmailModel.count({
+          userId,
           type: "draft"
         });
 
       case "spam":
         return this.EmailModel.count({
+          userId,
           type: "received",
           isSpam: true
         });
@@ -64,22 +76,24 @@ class EmailService {
     }
   }
 
-  async setEmailToViewed(emailId, viewedAt) {
-    const email = await this.EmailModel.findById(emailId);
+  async setEmailToViewed(userId, emailId, viewedAt) {
+    const email = await this.EmailModel.findOne({ userId, _id: emailId });
     email.viewedAt = viewedAt;
     return email.save();
   }
 
-  async getEmailOverview() {
+  async getEmailOverview(userId) {
     const unreadInboxEmails = await this.EmailModel.count({
+      userId,
       type: "received",
       isSpam: false,
       viewedAt: undefined
     });
 
-    const draftEmails = await this.EmailModel.count({ type: "draft" });
+    const draftEmails = await this.EmailModel.count({ userId, type: "draft" });
 
     const unreadSpamEmails = await this.EmailModel.count({
+      userId,
       type: "received",
       isSpam: true,
       viewedAt: undefined
@@ -92,9 +106,12 @@ class EmailService {
     };
   }
 
-  async createEmail(recipients, subject, message) {
+  async createEmail(userId, recipients, subject, message) {
+    const user = await this.userService.getUser(userId);
     const type = "outgoing";
     const email = await new this.EmailModel({
+      userId: user.id,
+      from: user.email,
       recipients,
       subject,
       message,
@@ -104,10 +121,13 @@ class EmailService {
     return email;
   }
 
-  async createDraftEmail(recipients, maybeSubject, message, viewedAt) {
+  async createDraftEmail(userId, recipients, maybeSubject, message, viewedAt) {
+    const user = await this.userService.getUser(userId);
     const type = "draft";
     const subject = maybeSubject || "<no subject>";
     const email = await new this.EmailModel({
+      userId: user.id,
+      from: user.email,
       recipients,
       subject,
       message,
@@ -118,8 +138,8 @@ class EmailService {
     return email;
   }
 
-  async updateDraftEmail(emailId, recipients, subject, message) {
-    const email = await this.EmailModel.findById(emailId);
+  async updateDraftEmail(userId, emailId, recipients, subject, message) {
+    const email = await this.EmailModel.findOne({ _id: emailId, userId });
     email.recipients = recipients;
     email.subject = subject;
     email.message = message;
@@ -127,19 +147,32 @@ class EmailService {
     return email.save();
   }
 
-  getEmail(emailId) {
-    return this.EmailModel.findById(emailId);
+  getEmail(userId, emailId) {
+    return this.EmailModel.findOne({ _id: emailId, userId });
   }
 
-  async removeEmail(emailId) {
-    const promise = this.EmailModel.findById(emailId);
-    const promise2 = this.searchService.deleteEmail(emailId);
-    const [email] = await Promise.all([promise, promise2]);
+  async removeEmail(userId, emailId) {
+    const email = await this.EmailModel.findOne({ _id: emailId, userId });
+    await this.searchService.deleteEmail(email.id);
     return email.remove();
   }
 
-  getInboxEmails(offset, limit) {
-    return this.EmailModel.find({ type: "received", isSpam: false }, null, {
+  getInboxEmails(userId, offset, limit) {
+    return this.EmailModel.find(
+      { userId, type: "received", isSpam: false },
+      null,
+      {
+        skip: offset,
+        limit,
+        sort: {
+          timestamp: -1
+        }
+      }
+    );
+  }
+
+  getSpamEmails(userId, offset, limit) {
+    return this.EmailModel.find({ userId, isSpam: true }, null, {
       skip: offset,
       limit,
       sort: {
@@ -148,8 +181,8 @@ class EmailService {
     });
   }
 
-  getSpamEmails(offset, limit) {
-    return this.EmailModel.find({ isSpam: true }, null, {
+  getImportantEmails(userId, offset, limit) {
+    return this.EmailModel.find({ userId, isImportant: true }, null, {
       skip: offset,
       limit,
       sort: {
@@ -158,24 +191,14 @@ class EmailService {
     });
   }
 
-  getImportantEmails(offset, limit) {
-    return this.EmailModel.find({ isImportant: true }, null, {
-      skip: offset,
-      limit,
-      sort: {
-        timestamp: -1
-      }
-    });
-  }
-
-  async setEmailAsImportant(emailId, isImportant) {
-    const email = await this.EmailModel.findById(emailId);
+  async setEmailAsImportant(userId, emailId, isImportant) {
+    const email = await this.EmailModel.findOne({ _id: emailId, userId });
     email.isImportant = isImportant;
     return email.save();
   }
 
-  getDraftEmails(offset, limit) {
-    return this.EmailModel.find({ type: "draft" }, null, {
+  getDraftEmails(userId, offset, limit) {
+    return this.EmailModel.find({ userId, type: "draft" }, null, {
       skip: offset,
       limit,
       sort: {
@@ -184,9 +207,10 @@ class EmailService {
     });
   }
 
-  getSentEmails(offset, limit) {
+  getSentEmails(userId, offset, limit) {
     return this.EmailModel.find(
       {
+        userId,
         $or: [{ type: "outgoing" }, { type: "sent" }]
       },
       null,

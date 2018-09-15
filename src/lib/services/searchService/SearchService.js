@@ -1,3 +1,5 @@
+const SimpleQueryStringBody = require("./SimpleQueryStringBody");
+
 class SearchService {
   constructor(client) {
     this.client = client;
@@ -7,29 +9,17 @@ class SearchService {
     this.countFoundEmails = this.countFoundEmails.bind(this);
   }
 
-  async countFoundEmails(q) {
+  async countFoundEmails(userId, q) {
     const response = await this.client.count({
-      body: {
-        query: {
-          simple_query_string: {
-            query: q
-          }
-        }
-      }
+      body: SimpleQueryStringBody(userId, q)
     });
 
     return response.count;
   }
 
-  async findEmail(q, offset, limit) {
+  async findEmail(userId, q, offset, limit) {
     const response = await this.client.search({
-      body: {
-        query: {
-          simple_query_string: {
-            query: q
-          }
-        }
-      },
+      body: SimpleQueryStringBody(userId, q),
       sort: "timestamp:desc",
       from: offset,
       size: limit
@@ -53,6 +43,7 @@ class SearchService {
       id: email.id,
       type: "email",
       body: {
+        userId: email.userId,
         recipients: email.recipients.join(","),
         subject: email.subject,
         message: email.message,

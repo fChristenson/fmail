@@ -9,7 +9,7 @@ const SearchService = require("./searchService/SearchService");
 const UserService = require("./userService/UserService");
 const searchService = new SearchService(client);
 const userService = new UserService(UserModel);
-const emailService = new EmailService(EmailModel, searchService);
+const emailService = new EmailService(EmailModel, searchService, userService);
 
 module.exports = {
   userService,

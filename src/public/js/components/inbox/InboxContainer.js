@@ -57,6 +57,11 @@ const mapDispatchToProps = dispatch => {
         const json = await response.json();
         const json2 = await response2.json();
         const json3 = await response3.json();
+
+        if (!response.ok) throw new Error(json.error);
+        if (!response2.ok) throw new Error(json2.error);
+        if (!response3.ok) throw new Error(json3.error);
+
         const totalEmails = json3.count;
         dispatch(SetTotalNumberOfEmails(totalEmails));
         const overview = EmailOverview(json2);

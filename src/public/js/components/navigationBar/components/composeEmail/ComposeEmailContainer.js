@@ -134,6 +134,9 @@ const mapDispatchToProps = dispatch => {
           const offset = 0;
           const response = await fetchEmails(pathname, offset, EMAIL_LIMIT);
           const json = await response.json();
+
+          if (!response.ok) throw new Error(json.error);
+
           const sort = json.sort(timestampSort);
           const emails = sort.map(InboxEmail);
           return dispatch(SetEmails(emails));
@@ -154,6 +157,9 @@ const mapDispatchToProps = dispatch => {
           const offset = 0;
           const response = await fetchEmails(pathname, offset, EMAIL_LIMIT);
           const json = await response.json();
+
+          if (!response.ok) throw new Error(json.error);
+
           const sort = json.sort(timestampSort);
           const emails = sort.map(InboxEmail);
           return dispatch(SetEmails(emails));
