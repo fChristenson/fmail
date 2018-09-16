@@ -7,6 +7,7 @@ const NavigationBar = ({ onCompose }) => {
   return (
     <aside className="navigation-bar">
       <Button
+        data-test="navigation-bar__compose"
         className="navigation-bar__compose-button"
         variant="contained"
         color="secondary"

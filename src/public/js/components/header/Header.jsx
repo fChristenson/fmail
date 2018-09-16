@@ -42,6 +42,7 @@ class Header extends React.Component {
         </form>
         <span className="header__email">{this.props.email}</span>
         <Button
+          data-test="header__logout"
           className="header__logout"
           onClick={this.onLogout}
           href={Paths.api.logout}

@@ -9,17 +9,23 @@ const DialogActions = require("@material-ui/core/DialogActions").default;
 
 const Alert = ({ open, onClose, title, text }) => {
   return (
-    <Dialog fullWidth open={open} onClose={onClose}>
-      <DialogTitle>
+    <Dialog fullWidth open={open} onClose={onClose} data-test="alert">
+      <DialogTitle data-test="alert__title">
         {title}
       </DialogTitle>
       <DialogContent>
-        <DialogContentText>
+        <DialogContentText data-test="alert__text">
           {text}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button variant="contained" onClick={onClose} color="primary" autoFocus>
+        <Button
+          variant="contained"
+          onClick={onClose}
+          color="primary"
+          autoFocus
+          data-test="alert__button"
+        >
           OK
         </Button>
       </DialogActions>

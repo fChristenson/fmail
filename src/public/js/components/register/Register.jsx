@@ -5,7 +5,7 @@ const Button = require("@material-ui/core/Button").default;
 
 const Register = ({ onSubmit, history }) => {
   return (
-    <div className="register">
+    <div className="register" data-test="register">
       <h1 className="register__h1">Register for fmail</h1>
       <form
         className="register__form"

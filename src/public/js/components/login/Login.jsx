@@ -6,7 +6,7 @@ const Paths = require("../../config/paths");
 
 const Login = ({ onSubmit, history, onRegister }) => {
   return (
-    <div className="login">
+    <div className="login" data-test="login">
       <h1 className="login__h1">Login for fmail</h1>
       <form
         className="login__form"
@@ -18,6 +18,7 @@ const Login = ({ onSubmit, history, onRegister }) => {
           Login
         </Button>
         <Button
+          data-test="login__register"
           variant="contained"
           href={Paths.register}
           color="secondary"

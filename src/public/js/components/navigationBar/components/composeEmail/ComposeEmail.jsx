@@ -14,6 +14,7 @@ class ComposeEmail extends React.Component {
   render() {
     return (
       <Dialog
+        data-test="compose-email"
         fullWidth
         scroll="paper"
         open={this.props.open}
@@ -65,6 +66,7 @@ class ComposeEmail extends React.Component {
           <DialogActions>
             <Button
               variant="contained"
+              data-test="compose-email__cancel"
               onClick={() =>
                 this.props.onCancel(
                   this.props.originalForm,
@@ -75,7 +77,12 @@ class ComposeEmail extends React.Component {
             >
               Cancel
             </Button>
-            <Button type="submit" variant="contained" color="primary">
+            <Button
+              type="submit"
+              data-test="compose-email__send"
+              variant="contained"
+              color="primary"
+            >
               Send
             </Button>
           </DialogActions>
