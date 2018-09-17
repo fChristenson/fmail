@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
+    "batch:send-emails": "node ./sendEmails.js",
     "server:watch": "npx nodemon ./server.js",
     "server:generate-crt": "openssl req -new -newkey rsa:2048 -nodes -keyout certificates/localhost.key -x509 -days 365 -out certificates/localhost.crt",
     "css:build": "npx postcss ./src/public/css/main.css -o ./dist/main.css",

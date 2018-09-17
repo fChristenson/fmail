@@ -1,5 +1,6 @@
 class EmailService {
-  constructor(EmailModel, searchService, userService) {
+  constructor(EmailModel, searchService, userService, emailServiceProvider) {
+    this.emailServiceProvider = emailServiceProvider;
     this.userService = userService;
     this.searchService = searchService;
     this.EmailModel = EmailModel;
@@ -18,6 +19,31 @@ class EmailService {
     this.removeEmail = this.removeEmail.bind(this);
     this.countEmails = this.countEmails.bind(this);
     this.search = this.search.bind(this);
+    this.sendEmails = this.sendEmails.bind(this);
+  }
+
+  async sendEmails(limit) {
+    const emailsToSend = await this.EmailModel.find(
+      { type: "outgoing" },
+      null,
+      { limit }
+    );
+
+    const promises = emailsToSend.map(this.emailServiceProvider.sendEmail);
+
+    for (const promise of promises) {
+      try {
+        const email = await promise;
+        const emailInDatabase = await this.EmailModel.findById(email.id);
+        emailInDatabase.type = "sent";
+        await emailInDatabase.save();
+      } catch (error) {
+        // TODO: track failed email dispatch and alert user?
+        console.error(error.message);
+      }
+    }
+
+    console.log(`Sent ${emailsToSend.length} emails`);
   }
 
   async search(userId, q, offset, limit) {

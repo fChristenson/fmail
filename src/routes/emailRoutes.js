@@ -199,6 +199,7 @@ router.post(
       subject,
       message
     );
+    //TODO: should we send the email after creating it?
     res.json(email);
   })
 );
@@ -259,6 +260,14 @@ router.post(
       isImportant
     );
     res.json(email);
+  })
+);
+
+router.post(
+  "/api/v1/emails/webhook",
+  catchExceptions(async (req, res) => {
+    //TODO: handle webhook emails
+    res.end();
   })
 );
 
