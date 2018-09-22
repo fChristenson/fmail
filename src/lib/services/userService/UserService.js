@@ -25,15 +25,16 @@ class UserService {
     return new this.UserModel({ email, password }).save();
   }
 
-  async registerUser(email, password) {
-    const maybeUser = await this.getUserByEmail(email);
+  async registerUser(username, password) {
+    const emailToSave = username + "@fmail.se";
+    const maybeUser = await this.getUserByEmail(emailToSave);
 
     if (maybeUser) {
       throw new StatusError("There is already a user with that email", 400);
     }
 
     const hash = await bcrypt.hash(password, SALT_ROUNDS);
-    return this.createUser(email, hash);
+    return this.createUser(emailToSave, hash);
   }
 
   async login(email, password) {

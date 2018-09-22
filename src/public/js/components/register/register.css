@@ -13,3 +13,13 @@
   justify-content: space-around;
   height: 300px;
 }
+
+.register__email-container {
+  display: flex;
+  align-items: center;
+}
+
+.register__email {
+  flex: 1;
+  margin-right: var(--margin-l) !important;
+}

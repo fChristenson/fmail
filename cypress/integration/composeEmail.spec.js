@@ -6,7 +6,7 @@ context("ComposeEmail", () => {
   const password = "123";
 
   beforeEach(() => {
-    email = `foo+${Math.random()}@bar.se`;
+    email = `foo+${Math.random()}`;
     createAccount(cy, email, password);
   });
 

@@ -1,8 +1,7 @@
 const Joi = require("joi");
-const emailSchema = require("../emailService/emailValidationSchema");
 
 const schema = Joi.object().keys({
-  email: emailSchema.required(),
+  email: Joi.string().min(1).max(255).required(),
   password: Joi.string().min(1).max(255).required()
 });
 

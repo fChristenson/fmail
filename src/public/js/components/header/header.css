@@ -16,15 +16,22 @@
 
 .header__email {
   font-size: var(--font-size-m);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  margin: 0 var(--margin-logo);
+  text-align: right;
 }
 
 .header__logout {
-  margin: 0 var(--margin-logo) !important;
+  margin: 0 var(--margin-logo) 0 0!important;
   flex: 0 0 auto;
 }
 
 .header__search-form {
   flex: 1 1 auto;
+  display: flex;
 }
 
 .header__search-field {

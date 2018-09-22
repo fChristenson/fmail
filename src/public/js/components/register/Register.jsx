@@ -11,7 +11,16 @@ const Register = ({ onSubmit, history }) => {
         className="register__form"
         onSubmit={event => onSubmit(event, history)}
       >
-        <TextField type="email" required name="email" label="Email" />
+        <div className="register__email-container">
+          <TextField
+            className="register__email"
+            type="text"
+            required
+            name="email"
+            label="Email"
+          />
+          <span className="register__fmail">@fmail.se</span>
+        </div>
         <TextField type="password" required name="password" label="Password" />
         <TextField
           type="password"

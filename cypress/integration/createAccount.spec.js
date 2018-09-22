@@ -14,7 +14,7 @@ context("/register", () => {
       .get("input[name=email]")
       .should("be.visible")
       .and("have.attr", "name", "email")
-      .and("have.attr", "type", "email")
+      .and("have.attr", "type", "text")
       .and("have.attr", "required");
   });
 
@@ -37,7 +37,7 @@ context("/register", () => {
   });
 
   it("should submit form", () => {
-    const email = `foo+${Math.random()}@bar.se`;
+    const email = `foo+${Math.random()}`;
     cy.get("input[name=email]").type(email);
 
     cy.get("input[name=password]").type("123");
@@ -50,7 +50,7 @@ context("/register", () => {
   });
 
   it("should fail to submit if the confirmation does not match the password", () => {
-    const email = `foo+${Math.random()}@bar.se`;
+    const email = `foo+${Math.random()}`;
     cy.get("input[name=email]").type(email);
 
     cy.get("input[name=password]").type("123");
@@ -65,7 +65,7 @@ context("/register", () => {
   });
 
   it("should fail to register the same email twice", () => {
-    const email = `foo+${Math.random()}@bar.se`;
+    const email = `foo+${Math.random()}`;
     cy.get("input[name=email]").type(email);
 
     cy.get("input[name=password]").type("123");

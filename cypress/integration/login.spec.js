@@ -6,8 +6,9 @@ context("/login", () => {
   const password = "123";
 
   beforeEach(() => {
-    email = `foo+${Math.random()}@bar.se`;
-    createAccount(cy, email, password);
+    const username = `foo+${Math.random()}`;
+    email = `${username}@fmail.se`;
+    createAccount(cy, username, password);
     cy.get("[data-test=header__logout]").click();
   });
 
@@ -20,7 +21,7 @@ context("/login", () => {
       .get("input[name=email]")
       .should("be.visible")
       .and("have.attr", "name", "email")
-      .and("have.attr", "type", "email")
+      .and("have.attr", "type", "text")
       .and("have.attr", "required");
   });
 

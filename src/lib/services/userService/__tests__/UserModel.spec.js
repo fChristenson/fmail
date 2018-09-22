@@ -17,7 +17,7 @@ describe("UserModel", () => {
   });
 
   it("correctly serialises the model", async () => {
-    const email = "foo@bar.se";
+    const email = "foo@fmail.se";
     const password = "bar";
     const createdAt = new Date("2018-08-23T16:42:41.897Z");
     const user = new UserModel({

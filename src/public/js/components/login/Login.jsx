@@ -12,7 +12,7 @@ const Login = ({ onSubmit, history, onRegister }) => {
         className="login__form"
         onSubmit={event => onSubmit(event, history)}
       >
-        <TextField type="email" required name="email" label="Email" />
+        <TextField type="text" required name="email" label="Email" />
         <TextField type="password" required name="password" label="Password" />
         <Button variant="contained" color="primary" type="submit">
           Login
